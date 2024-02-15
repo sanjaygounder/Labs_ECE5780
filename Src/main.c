@@ -81,6 +81,7 @@ int main(void)
 	__HAL_RCC_GPIOC_CLK_ENABLE(); // Enable the GPIOC clock in the RCC
 	//RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 	__HAL_RCC_TIM2_CLK_ENABLE(); // Enable timer 2 peripheral
+  __HAL_RCC_TIM3_CLK_ENABLE(); // Enable timer 3 peripheral
 	// Set up a configuration struct to pass to the initialization function
 	GPIO_InitTypeDef initStr = {GPIO_PIN_6 | GPIO_PIN_7| GPIO_PIN_8 | GPIO_PIN_9,
 	GPIO_MODE_OUTPUT_PP,
@@ -88,21 +89,59 @@ int main(void)
 	GPIO_NOPULL};
 	HAL_GPIO_Init(GPIOC, &initStr); // Initialize pins PC6,7,8 & PC9
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Start PC8 high (orange)
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET); // Start PC9 low (green)
-	//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET)
-	// Setting parameters
+
+	// *********** Setting parameters *********** //
 	uint32_t timer_freq = 8000000;
-	uint32_t target_freq = 4;
+	uint32_t target_freq_tim2 = 4; //target frequency for timer 2
+  uint32_t target_freq_tim3 = 4; //target frequency for timer 3
 	uint32_t psc = 7999;
-	uint32_t auto_reload_val = (timer_freq/((psc + 1)*target_freq));
-	//Set psc
+	uint32_t auto_reload_val_tim2 = (timer_freq/((psc + 1)*target_freq_tim2)); //ARR for timer 2
+  uint32_t auto_reload_val_tim3 = (timer_freq/((psc + 1)*target_freq_tim3)); //ARR for timer 3
+	//Set psc and arr for TIM2
 	TIM2->PSC = 7999;
-	TIM2->ARR = auto_reload_val;
-	// enable update interrupt
+	TIM2->ARR = auto_reload_val_tim2;
+  //Set psc and arr for TIM3
+  TIM3->PSC = 7999;
+	TIM3->ARR = auto_reload_val_tim3;
+	// enable update interrupt ONLY for TIM2
 	TIM2->DIER |= TIM_DIER_UIE;
-	// configure and enable/start timer
-	TIM2->CR1 |= TIM_CR1_CEN;
-	
+	// configure and enable/start timers
+	TIM2->CR1 |= (1 << 0);
+  TIM3->CR1 |= (1 << 0);
+
+  // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
+  // 1) For CC1S and CC2S, set channels to output -- 00: CC1/2 channel is configured as output
+  TIM3->CCMR1 &= ~(1 << 0); 
+  TIM3->CCMR1 &= ~(1 << 1);
+  TIM3->CCMR1 &= ~(1 << 8); 
+  TIM3->CCMR1 &= ~(1 << 9); 
+  // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
+  TIM3->CCMR1 &= ~(1 << 4); // clear bit 4
+  TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
+  TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
+  // 111: PWM mode 2 (bits 4-6)
+  TIM3->CCMR1 |=(1 << 4); 
+  TIM3->CCMR1 |=(1 << 5); 
+  TIM3->CCMR1 |=(1 << 6); 
+  // OC2M -> Set Output Channel 2 to PWM Mode 2
+  TIM3->CCMR1 &= ~(1 << 12); // clear bit 12
+  TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
+  TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
+  // 111: PWM mode 2 (bits 12-14)
+  TIM3->CCMR1 |= (1 << 12); 
+  TIM3->CCMR1 |= (1 << 13); 
+  TIM3->CCMR1 |= (1 << 14); 
+  // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_OC1PE) for Channel 2
+  TIM3->CCMR1 |= (1 << 3);
+  TIM3->CCMR1 |= (1 << 11);
+  // 4) Set the output enable bits for channels 1 & 2 in the CCER register
+  TIM3->CCER |= (1 << 0); // channel 1 (bit 0)
+  TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
+  // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
+	TIM3->CCR1 = auto_reload_val_tim3*(20/100);
+  TIM3->CCR2 = auto_reload_val_tim3*(20/100);
+  // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
+  
 	//*****Enable and Set Priority of the TIM2 Interrupt*****************//
 	//Enable the selected EXTI interrupt that references timer 2
 	NVIC_EnableIRQ(TIM2_IRQn);
