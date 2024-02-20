@@ -137,7 +137,7 @@ int main(void)
   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
 	TIM3->CCR1 = 2000;
-  TIM3->CCR2 = 2000;
+  TIM3->CCR2 = 3000;
   // Enable Timer 3
   TIM3->CR1 |= (1 << 0);
   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //

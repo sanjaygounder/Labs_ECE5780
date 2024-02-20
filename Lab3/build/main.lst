@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   30:Src/main.c    ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   31:Src/main.c    ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   32:Src/main.c    ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 2
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 2
 
 
   33:Src/main.c    ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   87:Src/main.c    **** 	GPIO_InitTypeDef initStr = {GPIO_PIN_6 | GPIO_PIN_7| GPIO_PIN_8 | GPIO_PIN_9,
   88:Src/main.c    **** 	GPIO_MODE_OUTPUT_PP,
   89:Src/main.c    **** 	GPIO_SPEED_FREQ_LOW,
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 3
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 3
 
 
   90:Src/main.c    **** 	GPIO_NOPULL};
@@ -130,88 +130,86 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   96:Src/main.c    **** 	uint32_t target_freq_tim2 = 4; //target frequency for timer 2
   97:Src/main.c    ****   uint32_t target_freq_tim3 = 800; //target frequency for timer 3
   98:Src/main.c    **** 	uint32_t psc = 7999;
-  99:Src/main.c    **** 	// uint32_t auto_reload_val_tim2 = (timer_freq/((psc + 1)*target_freq_tim2)); //ARR for timer 2
- 100:Src/main.c    ****   // uint32_t auto_reload_val_tim3 = (timer_freq/((psc + 1)*target_freq_tim3)); //ARR for timer 3
- 101:Src/main.c    **** 	//Set psc and arr for TIM2
- 102:Src/main.c    **** 	TIM2->PSC = 7999;
- 103:Src/main.c    **** 	TIM2->ARR = 250;
- 104:Src/main.c    ****   //Set psc and arr for TIM3
- 105:Src/main.c    ****   // TIM3->PSC = 7;
- 106:Src/main.c    **** 	TIM3->ARR = 10000;
- 107:Src/main.c    **** 	// enable update interrupt ONLY for TIM2
- 108:Src/main.c    **** 	TIM2->DIER |= TIM_DIER_UIE;
- 109:Src/main.c    **** 	// configure and enable/start timers
- 110:Src/main.c    **** 	TIM2->CR1 |= (1 << 0);
- 111:Src/main.c    **** 
- 112:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 113:Src/main.c    ****   // 1) For CC1S and CC2S, set channels to output -- 00: CC1/2 channel is configured as output
- 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 0); 
- 115:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
- 116:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
- 117:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
- 118:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
- 119:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 4); // clear bit 4
- 120:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
- 121:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
- 122:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
- 123:Src/main.c    ****   TIM3->CCMR1 |=(1 << 4); 
- 124:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
- 125:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
- 126:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
- 127:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 12); // clear bit 12
- 128:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
- 129:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
- 130:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
- 131:Src/main.c    ****   TIM3->CCMR1 |= (1 << 12); 
- 132:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
- 133:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
- 134:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
- 135:Src/main.c    ****   TIM3->CCMR1 |= (1 << 3);
- 136:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
- 137:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
- 138:Src/main.c    ****   TIM3->CCER |= (1 << 0); // channel 1 (bit 0)
- 139:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
- 140:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
- 141:Src/main.c    **** 	TIM3->CCR1 = 2000;
- 142:Src/main.c    ****   TIM3->CCR2 = 2000;
- 143:Src/main.c    ****   // Enable Timer 3
- 144:Src/main.c    ****   TIM3->CR1 |= (1 << 0);
- 145:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 146:Src/main.c    **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 4
+  99:Src/main.c    **** 	//Set psc and arr for TIM2
+ 100:Src/main.c    **** 	TIM2->PSC = 7999;
+ 101:Src/main.c    **** 	TIM2->ARR = 250;
+ 102:Src/main.c    ****   //Set psc and arr for TIM3
+ 103:Src/main.c    ****   // TIM3->PSC = 7;
+ 104:Src/main.c    **** 	TIM3->ARR = 10000;
+ 105:Src/main.c    **** 	// enable update interrupt ONLY for TIM2
+ 106:Src/main.c    **** 	TIM2->DIER |= TIM_DIER_UIE;
+ 107:Src/main.c    **** 	// configure and enable/start timers
+ 108:Src/main.c    **** 	TIM2->CR1 |= (1 << 0);
+ 109:Src/main.c    **** 
+ 110:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
+ 111:Src/main.c    ****   // 1) For CC1S and CC2S, set channels to output -- 00: CC1/2 channel is configured as output
+ 112:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 0); 
+ 113:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
+ 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
+ 115:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
+ 116:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
+ 117:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 4); // clear bit 4
+ 118:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
+ 119:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
+ 120:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
+ 121:Src/main.c    ****   TIM3->CCMR1 |=(1 << 4); 
+ 122:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
+ 123:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
+ 124:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
+ 125:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 12); // clear bit 12
+ 126:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
+ 127:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
+ 128:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
+ 129:Src/main.c    ****   TIM3->CCMR1 |= (1 << 12); 
+ 130:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
+ 131:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
+ 132:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
+ 133:Src/main.c    ****   TIM3->CCMR1 |= (1 << 3);
+ 134:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
+ 135:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
+ 136:Src/main.c    ****   TIM3->CCER |= (1 << 0); // channel 1 (bit 0)
+ 137:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
+ 138:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
+ 139:Src/main.c    **** 	TIM3->CCR1 = 2000;
+ 140:Src/main.c    ****   TIM3->CCR2 = 2000;
+ 141:Src/main.c    ****   // Enable Timer 3
+ 142:Src/main.c    ****   TIM3->CR1 |= (1 << 0);
+ 143:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
+ 144:Src/main.c    **** 
+ 145:Src/main.c    ****   // **** Alternate Function **** //
+ 146:Src/main.c    ****   //PC6 = TIM3_CH1 (AF0)
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 4
 
 
- 147:Src/main.c    ****   // **** Alternate Function **** //
- 148:Src/main.c    ****   //PC6 = TIM3_CH1 (AF0)
- 149:Src/main.c    ****   //PC7 = TIM3_CH2 (AF0)
- 150:Src/main.c    ****   // Clear Red MODER6 and then set to alternate (10)
- 151:Src/main.c    ****   GPIOC->MODER &= ~(1<< 12); //clear bits
- 152:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
- 153:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
- 154:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
- 155:Src/main.c    ****   GPIOC->MODER &= ~(1<< 14); //clear bit
- 156:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
- 157:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
- 158:Src/main.c    ****   // Assign AF0 to PC6 and PC7
- 159:Src/main.c    ****   // For AF0, you simply ensure the AF register bits for PC6 and PC7 are cleared
- 160:Src/main.c    ****   GPIOC->AFR[0] |= (0 << GPIO_AFRL_AFRL0_Pos); // Clear AF0 register (0000)
- 161:Src/main.c    **** 
- 162:Src/main.c    **** 	//*****Enable and Set Priority of the TIM2 Interrupt*****************//
- 163:Src/main.c    **** 	//Enable the selected EXTI interrupt that references timer 2
- 164:Src/main.c    **** 	NVIC_EnableIRQ(TIM2_IRQn);
- 165:Src/main.c    **** 	//Set the priority for the interrupt to 2
- 166:Src/main.c    **** 	NVIC_SetPriority(TIM2_IRQn, 2);
- 167:Src/main.c    **** 	
- 168:Src/main.c    **** 	
- 169:Src/main.c    **** 	while (1) {
- 170:Src/main.c    **** 	}
- 171:Src/main.c    **** }
- 172:Src/main.c    **** 
- 173:Src/main.c    **** /**
- 174:Src/main.c    **** * TIM2 Interrupt Handler
- 175:Src/main.c    **** */
- 176:Src/main.c    **** void TIM2_IRQHandler(){
-  27              		.loc 1 176 23 view -0
+ 147:Src/main.c    ****   //PC7 = TIM3_CH2 (AF0)
+ 148:Src/main.c    ****   // Clear Red MODER6 and then set to alternate (10)
+ 149:Src/main.c    ****   GPIOC->MODER &= ~(1<< 12); //clear bits
+ 150:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
+ 151:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
+ 152:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
+ 153:Src/main.c    ****   GPIOC->MODER &= ~(1<< 14); //clear bit
+ 154:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
+ 155:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
+ 156:Src/main.c    ****   // Assign AF0 to PC6 and PC7
+ 157:Src/main.c    ****   // For AF0, you simply ensure the AF register bits for PC6 and PC7 are cleared
+ 158:Src/main.c    ****   GPIOC->AFR[0] |= (0 << GPIO_AFRL_AFRL0_Pos); // Clear AF0 register (0000)
+ 159:Src/main.c    **** 
+ 160:Src/main.c    **** 	//*****Enable and Set Priority of the TIM2 Interrupt*****************//
+ 161:Src/main.c    **** 	//Enable the selected EXTI interrupt that references timer 2
+ 162:Src/main.c    **** 	NVIC_EnableIRQ(TIM2_IRQn);
+ 163:Src/main.c    **** 	//Set the priority for the interrupt to 2
+ 164:Src/main.c    **** 	NVIC_SetPriority(TIM2_IRQn, 2);
+ 165:Src/main.c    **** 	
+ 166:Src/main.c    **** 	
+ 167:Src/main.c    **** 	while (1) {
+ 168:Src/main.c    **** 	}
+ 169:Src/main.c    **** }
+ 170:Src/main.c    **** 
+ 171:Src/main.c    **** /**
+ 172:Src/main.c    **** * TIM2 Interrupt Handler
+ 173:Src/main.c    **** */
+ 174:Src/main.c    **** void TIM2_IRQHandler(){
+  27              		.loc 1 174 23 view -0
   28              		.cfi_startproc
   29              		@ args = 0, pretend = 0, frame = 0
   30              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -220,38 +218,38 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   33              		.cfi_def_cfa_offset 8
   34              		.cfi_offset 4, -8
   35              		.cfi_offset 14, -4
- 177:Src/main.c    **** 	//toggle green and orange
- 178:Src/main.c    **** 	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8); 
-  36              		.loc 1 178 2 view .LVU1
+ 175:Src/main.c    **** 	//toggle green and orange
+ 176:Src/main.c    **** 	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8); 
+  36              		.loc 1 176 2 view .LVU1
   37 0002 8021     		movs	r1, #128
   38 0004 084C     		ldr	r4, .L2
   39 0006 4900     		lsls	r1, r1, #1
   40 0008 2000     		movs	r0, r4
   41 000a FFF7FEFF 		bl	HAL_GPIO_TogglePin
   42              	.LVL0:
- 179:Src/main.c    ****   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9); 
-  43              		.loc 1 179 3 view .LVU2
+ 177:Src/main.c    ****   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9); 
+  43              		.loc 1 177 3 view .LVU2
   44 000e 8021     		movs	r1, #128
   45 0010 8900     		lsls	r1, r1, #2
   46 0012 2000     		movs	r0, r4
   47 0014 FFF7FEFF 		bl	HAL_GPIO_TogglePin
   48              	.LVL1:
- 180:Src/main.c    **** 	// clear pending register
- 181:Src/main.c    **** 	TIM2->SR &= ~(TIM_SR_UIF);
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 5
+ 178:Src/main.c    **** 	// clear pending register
+ 179:Src/main.c    **** 	TIM2->SR &= ~(TIM_SR_UIF);
+  49              		.loc 1 179 2 view .LVU3
+  50              		.loc 1 179 6 is_stmt 0 view .LVU4
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 5
 
 
-  49              		.loc 1 181 2 view .LVU3
-  50              		.loc 1 181 6 is_stmt 0 view .LVU4
   51 0018 8022     		movs	r2, #128
   52 001a D205     		lsls	r2, r2, #23
   53 001c 1369     		ldr	r3, [r2, #16]
-  54              		.loc 1 181 11 view .LVU5
+  54              		.loc 1 179 11 view .LVU5
   55 001e 0121     		movs	r1, #1
   56 0020 8B43     		bics	r3, r1
   57 0022 1361     		str	r3, [r2, #16]
- 182:Src/main.c    **** }
-  58              		.loc 1 182 1 view .LVU6
+ 180:Src/main.c    **** }
+  58              		.loc 1 180 1 view .LVU6
   59              		@ sp needed
   60 0024 10BD     		pop	{r4, pc}
   61              	.L3:
@@ -268,66 +266,66 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   73              		.thumb_func
   75              	_Error_Handler:
   76              	.LFB43:
- 183:Src/main.c    **** 
- 184:Src/main.c    **** /** System Clock Configuration
- 185:Src/main.c    **** */
- 186:Src/main.c    **** void SystemClock_Config(void)
- 187:Src/main.c    **** {
- 188:Src/main.c    **** 
- 189:Src/main.c    ****   RCC_OscInitTypeDef RCC_OscInitStruct;
- 190:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct;
- 191:Src/main.c    **** 
- 192:Src/main.c    ****     /**Initializes the CPU, AHB and APB busses clocks
- 193:Src/main.c    ****     */
- 194:Src/main.c    ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
- 195:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
- 196:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
- 197:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
- 198:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
- 199:Src/main.c    ****   {
- 200:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
- 201:Src/main.c    ****   }
- 202:Src/main.c    **** 
- 203:Src/main.c    ****     /**Initializes the CPU, AHB and APB busses clocks
- 204:Src/main.c    ****     */
- 205:Src/main.c    ****   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
- 206:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
- 207:Src/main.c    ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
- 208:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
- 209:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
- 210:Src/main.c    **** 
- 211:Src/main.c    ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
- 212:Src/main.c    ****   {
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 6
+ 181:Src/main.c    **** 
+ 182:Src/main.c    **** /** System Clock Configuration
+ 183:Src/main.c    **** */
+ 184:Src/main.c    **** void SystemClock_Config(void)
+ 185:Src/main.c    **** {
+ 186:Src/main.c    **** 
+ 187:Src/main.c    ****   RCC_OscInitTypeDef RCC_OscInitStruct;
+ 188:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct;
+ 189:Src/main.c    **** 
+ 190:Src/main.c    ****     /**Initializes the CPU, AHB and APB busses clocks
+ 191:Src/main.c    ****     */
+ 192:Src/main.c    ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+ 193:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+ 194:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
+ 195:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+ 196:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 197:Src/main.c    ****   {
+ 198:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 199:Src/main.c    ****   }
+ 200:Src/main.c    **** 
+ 201:Src/main.c    ****     /**Initializes the CPU, AHB and APB busses clocks
+ 202:Src/main.c    ****     */
+ 203:Src/main.c    ****   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+ 204:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
+ 205:Src/main.c    ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+ 206:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 207:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+ 208:Src/main.c    **** 
+ 209:Src/main.c    ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+ 210:Src/main.c    ****   {
+ 211:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 212:Src/main.c    ****   }
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 6
 
 
- 213:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
- 214:Src/main.c    ****   }
- 215:Src/main.c    **** 
- 216:Src/main.c    ****     /**Configure the Systick interrupt time
- 217:Src/main.c    ****     */
- 218:Src/main.c    ****   HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
- 219:Src/main.c    **** 
- 220:Src/main.c    ****     /**Configure the Systick
- 221:Src/main.c    ****     */
- 222:Src/main.c    ****   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
- 223:Src/main.c    **** 
- 224:Src/main.c    ****   /* SysTick_IRQn interrupt configuration */
- 225:Src/main.c    ****   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
- 226:Src/main.c    **** }
+ 213:Src/main.c    **** 
+ 214:Src/main.c    ****     /**Configure the Systick interrupt time
+ 215:Src/main.c    ****     */
+ 216:Src/main.c    ****   HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+ 217:Src/main.c    **** 
+ 218:Src/main.c    ****     /**Configure the Systick
+ 219:Src/main.c    ****     */
+ 220:Src/main.c    ****   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+ 221:Src/main.c    **** 
+ 222:Src/main.c    ****   /* SysTick_IRQn interrupt configuration */
+ 223:Src/main.c    ****   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
+ 224:Src/main.c    **** }
+ 225:Src/main.c    **** 
+ 226:Src/main.c    **** /* USER CODE BEGIN 4 */
  227:Src/main.c    **** 
- 228:Src/main.c    **** /* USER CODE BEGIN 4 */
+ 228:Src/main.c    **** /* USER CODE END 4 */
  229:Src/main.c    **** 
- 230:Src/main.c    **** /* USER CODE END 4 */
- 231:Src/main.c    **** 
- 232:Src/main.c    **** /**
- 233:Src/main.c    ****   * @brief  This function is executed in case of error occurrence.
- 234:Src/main.c    ****   * @param  None
- 235:Src/main.c    ****   * @retval None
- 236:Src/main.c    ****   */
- 237:Src/main.c    **** void _Error_Handler(char * file, int line)
- 238:Src/main.c    **** {
-  77              		.loc 1 238 1 is_stmt 1 view -0
+ 230:Src/main.c    **** /**
+ 231:Src/main.c    ****   * @brief  This function is executed in case of error occurrence.
+ 232:Src/main.c    ****   * @param  None
+ 233:Src/main.c    ****   * @retval None
+ 234:Src/main.c    ****   */
+ 235:Src/main.c    **** void _Error_Handler(char * file, int line)
+ 236:Src/main.c    **** {
+  77              		.loc 1 236 1 is_stmt 1 view -0
   78              		.cfi_startproc
   79              		@ Volatile: function does not return.
   80              		@ args = 0, pretend = 0, frame = 0
@@ -335,15 +333,15 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   82              		@ link register save eliminated.
   83              	.LVL2:
   84              	.L5:
- 239:Src/main.c    ****   /* USER CODE BEGIN Error_Handler_Debug */
- 240:Src/main.c    ****   /* User can add his own implementation to report the HAL error return state */
- 241:Src/main.c    ****   while(1)
-  85              		.loc 1 241 3 view .LVU8
- 242:Src/main.c    ****   {
- 243:Src/main.c    ****   }
-  86              		.loc 1 243 3 view .LVU9
- 241:Src/main.c    ****   {
-  87              		.loc 1 241 8 view .LVU10
+ 237:Src/main.c    ****   /* USER CODE BEGIN Error_Handler_Debug */
+ 238:Src/main.c    ****   /* User can add his own implementation to report the HAL error return state */
+ 239:Src/main.c    ****   while(1)
+  85              		.loc 1 239 3 view .LVU8
+ 240:Src/main.c    ****   {
+ 241:Src/main.c    ****   }
+  86              		.loc 1 241 3 view .LVU9
+ 239:Src/main.c    ****   {
+  87              		.loc 1 239 8 view .LVU10
   88 0000 FEE7     		b	.L5
   89              		.cfi_endproc
   90              	.LFE43:
@@ -358,15 +356,15 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   98              		.align	1
   99              		.global	SystemClock_Config
  100              		.syntax unified
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 7
-
-
  101              		.code	16
  102              		.thumb_func
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 7
+
+
  104              	SystemClock_Config:
  105              	.LFB42:
- 187:Src/main.c    **** 
- 106              		.loc 1 187 1 view -0
+ 185:Src/main.c    **** 
+ 106              		.loc 1 185 1 view -0
  107              		.cfi_startproc
  108              		@ args = 0, pretend = 0, frame = 72
  109              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -377,129 +375,129 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  114 0002 93B0     		sub	sp, sp, #76
  115              	.LCFI2:
  116              		.cfi_def_cfa_offset 80
- 189:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct;
- 117              		.loc 1 189 3 view .LVU12
- 190:Src/main.c    **** 
- 118              		.loc 1 190 3 view .LVU13
- 194:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
- 119              		.loc 1 194 3 view .LVU14
- 194:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
- 120              		.loc 1 194 36 is_stmt 0 view .LVU15
+ 187:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct;
+ 117              		.loc 1 187 3 view .LVU12
+ 188:Src/main.c    **** 
+ 118              		.loc 1 188 3 view .LVU13
+ 192:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+ 119              		.loc 1 192 3 view .LVU14
+ 192:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+ 120              		.loc 1 192 36 is_stmt 0 view .LVU15
  121 0004 0223     		movs	r3, #2
  122 0006 0593     		str	r3, [sp, #20]
- 195:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
- 123              		.loc 1 195 3 is_stmt 1 view .LVU16
- 195:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
- 124              		.loc 1 195 30 is_stmt 0 view .LVU17
+ 193:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
+ 123              		.loc 1 193 3 is_stmt 1 view .LVU16
+ 193:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
+ 124              		.loc 1 193 30 is_stmt 0 view .LVU17
  125 0008 013B     		subs	r3, r3, #1
  126 000a 0893     		str	r3, [sp, #32]
- 196:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
- 127              		.loc 1 196 3 is_stmt 1 view .LVU18
- 196:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
- 128              		.loc 1 196 41 is_stmt 0 view .LVU19
+ 194:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+ 127              		.loc 1 194 3 is_stmt 1 view .LVU18
+ 194:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+ 128              		.loc 1 194 41 is_stmt 0 view .LVU19
  129 000c 0F33     		adds	r3, r3, #15
  130 000e 0993     		str	r3, [sp, #36]
- 197:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
- 131              		.loc 1 197 3 is_stmt 1 view .LVU20
- 197:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
- 132              		.loc 1 197 34 is_stmt 0 view .LVU21
+ 195:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 131              		.loc 1 195 3 is_stmt 1 view .LVU20
+ 195:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 132              		.loc 1 195 34 is_stmt 0 view .LVU21
  133 0010 0023     		movs	r3, #0
  134 0012 0E93     		str	r3, [sp, #56]
- 198:Src/main.c    ****   {
- 135              		.loc 1 198 3 is_stmt 1 view .LVU22
- 198:Src/main.c    ****   {
- 136              		.loc 1 198 7 is_stmt 0 view .LVU23
+ 196:Src/main.c    ****   {
+ 135              		.loc 1 196 3 is_stmt 1 view .LVU22
+ 196:Src/main.c    ****   {
+ 136              		.loc 1 196 7 is_stmt 0 view .LVU23
  137 0014 05A8     		add	r0, sp, #20
  138 0016 FFF7FEFF 		bl	HAL_RCC_OscConfig
  139              	.LVL3:
- 198:Src/main.c    ****   {
- 140              		.loc 1 198 6 discriminator 1 view .LVU24
+ 196:Src/main.c    ****   {
+ 140              		.loc 1 196 6 discriminator 1 view .LVU24
  141 001a 0028     		cmp	r0, #0
  142 001c 1ED1     		bne	.L9
- 205:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
- 143              		.loc 1 205 3 is_stmt 1 view .LVU25
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 8
+ 203:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
+ 143              		.loc 1 203 3 is_stmt 1 view .LVU25
+ 203:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
+ 144              		.loc 1 203 31 is_stmt 0 view .LVU26
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 8
 
 
- 205:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
- 144              		.loc 1 205 31 is_stmt 0 view .LVU26
  145 001e 0723     		movs	r3, #7
  146 0020 0193     		str	r3, [sp, #4]
- 207:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
- 147              		.loc 1 207 3 is_stmt 1 view .LVU27
- 207:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
- 148              		.loc 1 207 34 is_stmt 0 view .LVU28
+ 205:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 147              		.loc 1 205 3 is_stmt 1 view .LVU27
+ 205:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 148              		.loc 1 205 34 is_stmt 0 view .LVU28
  149 0022 0023     		movs	r3, #0
  150 0024 0293     		str	r3, [sp, #8]
- 208:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
- 151              		.loc 1 208 3 is_stmt 1 view .LVU29
- 208:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
- 152              		.loc 1 208 35 is_stmt 0 view .LVU30
+ 206:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+ 151              		.loc 1 206 3 is_stmt 1 view .LVU29
+ 206:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+ 152              		.loc 1 206 35 is_stmt 0 view .LVU30
  153 0026 0393     		str	r3, [sp, #12]
- 209:Src/main.c    **** 
- 154              		.loc 1 209 3 is_stmt 1 view .LVU31
- 209:Src/main.c    **** 
- 155              		.loc 1 209 36 is_stmt 0 view .LVU32
+ 207:Src/main.c    **** 
+ 154              		.loc 1 207 3 is_stmt 1 view .LVU31
+ 207:Src/main.c    **** 
+ 155              		.loc 1 207 36 is_stmt 0 view .LVU32
  156 0028 0493     		str	r3, [sp, #16]
- 211:Src/main.c    ****   {
- 157              		.loc 1 211 3 is_stmt 1 view .LVU33
- 211:Src/main.c    ****   {
- 158              		.loc 1 211 7 is_stmt 0 view .LVU34
+ 209:Src/main.c    ****   {
+ 157              		.loc 1 209 3 is_stmt 1 view .LVU33
+ 209:Src/main.c    ****   {
+ 158              		.loc 1 209 7 is_stmt 0 view .LVU34
  159 002a 0021     		movs	r1, #0
  160 002c 01A8     		add	r0, sp, #4
  161 002e FFF7FEFF 		bl	HAL_RCC_ClockConfig
  162              	.LVL4:
- 211:Src/main.c    ****   {
- 163              		.loc 1 211 6 discriminator 1 view .LVU35
+ 209:Src/main.c    ****   {
+ 163              		.loc 1 209 6 discriminator 1 view .LVU35
  164 0032 0028     		cmp	r0, #0
  165 0034 16D1     		bne	.L10
- 218:Src/main.c    **** 
- 166              		.loc 1 218 3 is_stmt 1 view .LVU36
- 218:Src/main.c    **** 
- 167              		.loc 1 218 22 is_stmt 0 view .LVU37
+ 216:Src/main.c    **** 
+ 166              		.loc 1 216 3 is_stmt 1 view .LVU36
+ 216:Src/main.c    **** 
+ 167              		.loc 1 216 22 is_stmt 0 view .LVU37
  168 0036 FFF7FEFF 		bl	HAL_RCC_GetHCLKFreq
  169              	.LVL5:
- 218:Src/main.c    **** 
- 170              		.loc 1 218 3 discriminator 1 view .LVU38
+ 216:Src/main.c    **** 
+ 170              		.loc 1 216 3 discriminator 1 view .LVU38
  171 003a FA21     		movs	r1, #250
  172 003c 8900     		lsls	r1, r1, #2
  173 003e FFF7FEFF 		bl	__aeabi_uidiv
  174              	.LVL6:
  175 0042 FFF7FEFF 		bl	HAL_SYSTICK_Config
  176              	.LVL7:
- 222:Src/main.c    **** 
- 177              		.loc 1 222 3 is_stmt 1 view .LVU39
+ 220:Src/main.c    **** 
+ 177              		.loc 1 220 3 is_stmt 1 view .LVU39
  178 0046 0420     		movs	r0, #4
  179 0048 FFF7FEFF 		bl	HAL_SYSTICK_CLKSourceConfig
  180              	.LVL8:
- 225:Src/main.c    **** }
- 181              		.loc 1 225 3 view .LVU40
+ 223:Src/main.c    **** }
+ 181              		.loc 1 223 3 view .LVU40
  182 004c 0120     		movs	r0, #1
  183 004e 0022     		movs	r2, #0
  184 0050 0021     		movs	r1, #0
  185 0052 4042     		rsbs	r0, r0, #0
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 9
-
-
  186 0054 FFF7FEFF 		bl	HAL_NVIC_SetPriority
  187              	.LVL9:
- 226:Src/main.c    **** 
- 188              		.loc 1 226 1 is_stmt 0 view .LVU41
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 9
+
+
+ 224:Src/main.c    **** 
+ 188              		.loc 1 224 1 is_stmt 0 view .LVU41
  189 0058 13B0     		add	sp, sp, #76
  190              		@ sp needed
  191 005a 00BD     		pop	{pc}
  192              	.L9:
- 200:Src/main.c    ****   }
- 193              		.loc 1 200 5 is_stmt 1 view .LVU42
+ 198:Src/main.c    ****   }
+ 193              		.loc 1 198 5 is_stmt 1 view .LVU42
  194 005c 0348     		ldr	r0, .L11
- 195 005e C821     		movs	r1, #200
+ 195 005e C621     		movs	r1, #198
  196 0060 FFF7FEFF 		bl	_Error_Handler
  197              	.LVL10:
  198              	.L10:
- 213:Src/main.c    ****   }
- 199              		.loc 1 213 5 view .LVU43
+ 211:Src/main.c    ****   }
+ 199              		.loc 1 211 5 view .LVU43
  200 0064 0148     		ldr	r0, .L11
- 201 0066 D521     		movs	r1, #213
+ 201 0066 D321     		movs	r1, #211
  202 0068 FFF7FEFF 		bl	_Error_Handler
  203              	.LVL11:
  204              	.L12:
@@ -538,11 +536,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  238              		.cfi_offset 9, -24
  239 0008 89B0     		sub	sp, sp, #36
  240              	.LCFI5:
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 10
-
-
  241              		.cfi_def_cfa_offset 64
   79:Src/main.c    **** 	SystemClock_Config(); //Configure the system clock
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 10
+
+
  242              		.loc 1 79 2 view .LVU45
  243 000a FFF7FEFF 		bl	HAL_Init
  244              	.LVL12:
@@ -598,11 +596,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  281              		.loc 1 84 2 view .LVU58
   85:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
  282              		.loc 1 85 3 view .LVU59
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 11
-
-
  283              	.LBB11:
   85:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 11
+
+
  284              		.loc 1 85 3 view .LVU60
   85:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
  285              		.loc 1 85 3 view .LVU61
@@ -655,356 +653,356 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  323              		.loc 1 96 2 view .LVU70
   97:Src/main.c    **** 	uint32_t psc = 7999;
  324              		.loc 1 97 3 view .LVU71
-  98:Src/main.c    **** 	// uint32_t auto_reload_val_tim2 = (timer_freq/((psc + 1)*target_freq_tim2)); //ARR for timer 2
+  98:Src/main.c    **** 	//Set psc and arr for TIM2
  325              		.loc 1 98 2 view .LVU72
- 102:Src/main.c    **** 	TIM2->ARR = 250;
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 12
+ 100:Src/main.c    **** 	TIM2->ARR = 250;
+ 326              		.loc 1 100 2 view .LVU73
+ 100:Src/main.c    **** 	TIM2->ARR = 250;
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 12
 
 
- 326              		.loc 1 102 2 view .LVU73
- 102:Src/main.c    **** 	TIM2->ARR = 250;
- 327              		.loc 1 102 12 is_stmt 0 view .LVU74
+ 327              		.loc 1 100 12 is_stmt 0 view .LVU74
  328 006e 8022     		movs	r2, #128
  329 0070 D205     		lsls	r2, r2, #23
  330 0072 474B     		ldr	r3, .L15+8
  331 0074 9362     		str	r3, [r2, #40]
- 103:Src/main.c    ****   //Set psc and arr for TIM3
- 332              		.loc 1 103 2 is_stmt 1 view .LVU75
- 103:Src/main.c    ****   //Set psc and arr for TIM3
- 333              		.loc 1 103 12 is_stmt 0 view .LVU76
+ 101:Src/main.c    ****   //Set psc and arr for TIM3
+ 332              		.loc 1 101 2 is_stmt 1 view .LVU75
+ 101:Src/main.c    ****   //Set psc and arr for TIM3
+ 333              		.loc 1 101 12 is_stmt 0 view .LVU76
  334 0076 FA23     		movs	r3, #250
  335 0078 D362     		str	r3, [r2, #44]
- 106:Src/main.c    **** 	// enable update interrupt ONLY for TIM2
- 336              		.loc 1 106 2 is_stmt 1 view .LVU77
- 106:Src/main.c    **** 	// enable update interrupt ONLY for TIM2
- 337              		.loc 1 106 12 is_stmt 0 view .LVU78
+ 104:Src/main.c    **** 	// enable update interrupt ONLY for TIM2
+ 336              		.loc 1 104 2 is_stmt 1 view .LVU77
+ 104:Src/main.c    **** 	// enable update interrupt ONLY for TIM2
+ 337              		.loc 1 104 12 is_stmt 0 view .LVU78
  338 007a 464B     		ldr	r3, .L15+12
  339 007c 4649     		ldr	r1, .L15+16
  340 007e D962     		str	r1, [r3, #44]
- 108:Src/main.c    **** 	// configure and enable/start timers
- 341              		.loc 1 108 2 is_stmt 1 view .LVU79
- 108:Src/main.c    **** 	// configure and enable/start timers
- 342              		.loc 1 108 6 is_stmt 0 view .LVU80
+ 106:Src/main.c    **** 	// configure and enable/start timers
+ 341              		.loc 1 106 2 is_stmt 1 view .LVU79
+ 106:Src/main.c    **** 	// configure and enable/start timers
+ 342              		.loc 1 106 6 is_stmt 0 view .LVU80
  343 0080 D168     		ldr	r1, [r2, #12]
- 108:Src/main.c    **** 	// configure and enable/start timers
- 344              		.loc 1 108 13 view .LVU81
+ 106:Src/main.c    **** 	// configure and enable/start timers
+ 344              		.loc 1 106 13 view .LVU81
  345 0082 2943     		orrs	r1, r5
  346 0084 D160     		str	r1, [r2, #12]
- 110:Src/main.c    **** 
- 347              		.loc 1 110 2 is_stmt 1 view .LVU82
- 110:Src/main.c    **** 
- 348              		.loc 1 110 6 is_stmt 0 view .LVU83
+ 108:Src/main.c    **** 
+ 347              		.loc 1 108 2 is_stmt 1 view .LVU82
+ 108:Src/main.c    **** 
+ 348              		.loc 1 108 6 is_stmt 0 view .LVU83
  349 0086 1168     		ldr	r1, [r2]
- 110:Src/main.c    **** 
- 350              		.loc 1 110 12 view .LVU84
+ 108:Src/main.c    **** 
+ 350              		.loc 1 108 12 view .LVU84
  351 0088 2943     		orrs	r1, r5
  352 008a 1160     		str	r1, [r2]
- 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
- 353              		.loc 1 114 3 is_stmt 1 view .LVU85
- 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
- 354              		.loc 1 114 7 is_stmt 0 view .LVU86
+ 112:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
+ 353              		.loc 1 112 3 is_stmt 1 view .LVU85
+ 112:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
+ 354              		.loc 1 112 7 is_stmt 0 view .LVU86
  355 008c 9A69     		ldr	r2, [r3, #24]
- 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
- 356              		.loc 1 114 15 view .LVU87
+ 112:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 1);
+ 356              		.loc 1 112 15 view .LVU87
  357 008e AA43     		bics	r2, r5
  358 0090 9A61     		str	r2, [r3, #24]
- 115:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
- 359              		.loc 1 115 3 is_stmt 1 view .LVU88
- 115:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
- 360              		.loc 1 115 7 is_stmt 0 view .LVU89
+ 113:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
+ 359              		.loc 1 113 3 is_stmt 1 view .LVU88
+ 113:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
+ 360              		.loc 1 113 7 is_stmt 0 view .LVU89
  361 0092 9A69     		ldr	r2, [r3, #24]
- 115:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
- 362              		.loc 1 115 15 view .LVU90
+ 113:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 8); 
+ 362              		.loc 1 113 15 view .LVU90
  363 0094 B243     		bics	r2, r6
  364 0096 9A61     		str	r2, [r3, #24]
- 116:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 13
+ 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
+ 365              		.loc 1 114 3 is_stmt 1 view .LVU91
+ 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 13
 
 
- 365              		.loc 1 116 3 is_stmt 1 view .LVU91
- 116:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
- 366              		.loc 1 116 7 is_stmt 0 view .LVU92
+ 366              		.loc 1 114 7 is_stmt 0 view .LVU92
  367 0098 9A69     		ldr	r2, [r3, #24]
- 116:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
- 368              		.loc 1 116 15 view .LVU93
+ 114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
+ 368              		.loc 1 114 15 view .LVU93
  369 009a 4049     		ldr	r1, .L15+20
  370 009c 0A40     		ands	r2, r1
  371 009e 9A61     		str	r2, [r3, #24]
- 117:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
- 372              		.loc 1 117 3 is_stmt 1 view .LVU94
- 117:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
- 373              		.loc 1 117 7 is_stmt 0 view .LVU95
+ 115:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
+ 372              		.loc 1 115 3 is_stmt 1 view .LVU94
+ 115:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
+ 373              		.loc 1 115 7 is_stmt 0 view .LVU95
  374 00a0 9A69     		ldr	r2, [r3, #24]
- 117:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
- 375              		.loc 1 117 15 view .LVU96
+ 115:Src/main.c    ****   // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
+ 375              		.loc 1 115 15 view .LVU96
  376 00a2 3F49     		ldr	r1, .L15+24
  377 00a4 0A40     		ands	r2, r1
  378 00a6 9A61     		str	r2, [r3, #24]
- 119:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
- 379              		.loc 1 119 3 is_stmt 1 view .LVU97
- 119:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
- 380              		.loc 1 119 7 is_stmt 0 view .LVU98
+ 117:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
+ 379              		.loc 1 117 3 is_stmt 1 view .LVU97
+ 117:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
+ 380              		.loc 1 117 7 is_stmt 0 view .LVU98
  381 00a8 9A69     		ldr	r2, [r3, #24]
- 119:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
- 382              		.loc 1 119 15 view .LVU99
+ 117:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
+ 382              		.loc 1 117 15 view .LVU99
  383 00aa 1027     		movs	r7, #16
  384 00ac BA43     		bics	r2, r7
  385 00ae 9A61     		str	r2, [r3, #24]
- 120:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
- 386              		.loc 1 120 3 is_stmt 1 view .LVU100
- 120:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
- 387              		.loc 1 120 7 is_stmt 0 view .LVU101
+ 118:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
+ 386              		.loc 1 118 3 is_stmt 1 view .LVU100
+ 118:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
+ 387              		.loc 1 118 7 is_stmt 0 view .LVU101
  388 00b0 9A69     		ldr	r2, [r3, #24]
- 120:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
- 389              		.loc 1 120 15 view .LVU102
+ 118:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
+ 389              		.loc 1 118 15 view .LVU102
  390 00b2 2020     		movs	r0, #32
  391 00b4 8243     		bics	r2, r0
  392 00b6 9A61     		str	r2, [r3, #24]
- 121:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
- 393              		.loc 1 121 3 is_stmt 1 view .LVU103
- 121:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
- 394              		.loc 1 121 7 is_stmt 0 view .LVU104
+ 119:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
+ 393              		.loc 1 119 3 is_stmt 1 view .LVU103
+ 119:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
+ 394              		.loc 1 119 7 is_stmt 0 view .LVU104
  395 00b8 9A69     		ldr	r2, [r3, #24]
- 121:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
- 396              		.loc 1 121 15 view .LVU105
+ 119:Src/main.c    ****   // 111: PWM mode 2 (bits 4-6)
+ 396              		.loc 1 119 15 view .LVU105
  397 00ba 4021     		movs	r1, #64
  398 00bc 8A43     		bics	r2, r1
  399 00be 9A61     		str	r2, [r3, #24]
- 123:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
- 400              		.loc 1 123 3 is_stmt 1 view .LVU106
- 123:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
- 401              		.loc 1 123 7 is_stmt 0 view .LVU107
+ 121:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
+ 400              		.loc 1 121 3 is_stmt 1 view .LVU106
+ 121:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
+ 401              		.loc 1 121 7 is_stmt 0 view .LVU107
  402 00c0 9A69     		ldr	r2, [r3, #24]
- 123:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
- 403              		.loc 1 123 15 view .LVU108
+ 121:Src/main.c    ****   TIM3->CCMR1 |=(1 << 5); 
+ 403              		.loc 1 121 15 view .LVU108
  404 00c2 3A43     		orrs	r2, r7
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 14
-
-
  405 00c4 9A61     		str	r2, [r3, #24]
- 124:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
- 406              		.loc 1 124 3 is_stmt 1 view .LVU109
- 124:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
- 407              		.loc 1 124 7 is_stmt 0 view .LVU110
+ 122:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 14
+
+
+ 406              		.loc 1 122 3 is_stmt 1 view .LVU109
+ 122:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
+ 407              		.loc 1 122 7 is_stmt 0 view .LVU110
  408 00c6 9A69     		ldr	r2, [r3, #24]
- 124:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
- 409              		.loc 1 124 15 view .LVU111
+ 122:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
+ 409              		.loc 1 122 15 view .LVU111
  410 00c8 0243     		orrs	r2, r0
  411 00ca 9A61     		str	r2, [r3, #24]
- 125:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
- 412              		.loc 1 125 3 is_stmt 1 view .LVU112
- 125:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
- 413              		.loc 1 125 7 is_stmt 0 view .LVU113
+ 123:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
+ 412              		.loc 1 123 3 is_stmt 1 view .LVU112
+ 123:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
+ 413              		.loc 1 123 7 is_stmt 0 view .LVU113
  414 00cc 9A69     		ldr	r2, [r3, #24]
- 125:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
- 415              		.loc 1 125 15 view .LVU114
+ 123:Src/main.c    ****   // OC2M -> Set Output Channel 2 to PWM Mode 2
+ 415              		.loc 1 123 15 view .LVU114
  416 00ce 0A43     		orrs	r2, r1
  417 00d0 9A61     		str	r2, [r3, #24]
- 127:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
- 418              		.loc 1 127 3 is_stmt 1 view .LVU115
- 127:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
- 419              		.loc 1 127 7 is_stmt 0 view .LVU116
+ 125:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
+ 418              		.loc 1 125 3 is_stmt 1 view .LVU115
+ 125:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
+ 419              		.loc 1 125 7 is_stmt 0 view .LVU116
  420 00d2 9A69     		ldr	r2, [r3, #24]
- 127:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
- 421              		.loc 1 127 15 view .LVU117
+ 125:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
+ 421              		.loc 1 125 15 view .LVU117
  422 00d4 3349     		ldr	r1, .L15+28
  423 00d6 8C46     		mov	ip, r1
  424 00d8 0A40     		ands	r2, r1
  425 00da 9A61     		str	r2, [r3, #24]
- 128:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
- 426              		.loc 1 128 3 is_stmt 1 view .LVU118
- 128:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
- 427              		.loc 1 128 7 is_stmt 0 view .LVU119
+ 126:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
+ 426              		.loc 1 126 3 is_stmt 1 view .LVU118
+ 126:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
+ 427              		.loc 1 126 7 is_stmt 0 view .LVU119
  428 00dc 9A69     		ldr	r2, [r3, #24]
- 128:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
- 429              		.loc 1 128 15 view .LVU120
+ 126:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
+ 429              		.loc 1 126 15 view .LVU120
  430 00de 324E     		ldr	r6, .L15+32
  431 00e0 3240     		ands	r2, r6
  432 00e2 9A61     		str	r2, [r3, #24]
- 129:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
- 433              		.loc 1 129 3 is_stmt 1 view .LVU121
- 129:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
- 434              		.loc 1 129 7 is_stmt 0 view .LVU122
+ 127:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
+ 433              		.loc 1 127 3 is_stmt 1 view .LVU121
+ 127:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
+ 434              		.loc 1 127 7 is_stmt 0 view .LVU122
  435 00e4 9A69     		ldr	r2, [r3, #24]
- 129:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
- 436              		.loc 1 129 15 view .LVU123
+ 127:Src/main.c    ****   // 111: PWM mode 2 (bits 12-14)
+ 436              		.loc 1 127 15 view .LVU123
  437 00e6 3148     		ldr	r0, .L15+36
  438 00e8 0240     		ands	r2, r0
  439 00ea 9A61     		str	r2, [r3, #24]
- 131:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
- 440              		.loc 1 131 3 is_stmt 1 view .LVU124
- 131:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
- 441              		.loc 1 131 7 is_stmt 0 view .LVU125
+ 129:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
+ 440              		.loc 1 129 3 is_stmt 1 view .LVU124
+ 129:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
+ 441              		.loc 1 129 7 is_stmt 0 view .LVU125
  442 00ec 9969     		ldr	r1, [r3, #24]
- 131:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
- 443              		.loc 1 131 15 view .LVU126
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 15
-
-
+ 129:Src/main.c    ****   TIM3->CCMR1 |= (1 << 13); 
+ 443              		.loc 1 129 15 view .LVU126
  444 00ee 8022     		movs	r2, #128
  445 00f0 5201     		lsls	r2, r2, #5
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 15
+
+
  446 00f2 0A43     		orrs	r2, r1
  447 00f4 9A61     		str	r2, [r3, #24]
- 132:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
- 448              		.loc 1 132 3 is_stmt 1 view .LVU127
- 132:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
- 449              		.loc 1 132 7 is_stmt 0 view .LVU128
+ 130:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
+ 448              		.loc 1 130 3 is_stmt 1 view .LVU127
+ 130:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
+ 449              		.loc 1 130 7 is_stmt 0 view .LVU128
  450 00f6 9969     		ldr	r1, [r3, #24]
- 132:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
- 451              		.loc 1 132 15 view .LVU129
+ 130:Src/main.c    ****   TIM3->CCMR1 |= (1 << 14); 
+ 451              		.loc 1 130 15 view .LVU129
  452 00f8 8022     		movs	r2, #128
  453 00fa 9201     		lsls	r2, r2, #6
  454 00fc 9146     		mov	r9, r2
  455 00fe 1143     		orrs	r1, r2
  456 0100 9961     		str	r1, [r3, #24]
- 133:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
- 457              		.loc 1 133 3 is_stmt 1 view .LVU130
- 133:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
- 458              		.loc 1 133 7 is_stmt 0 view .LVU131
+ 131:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
+ 457              		.loc 1 131 3 is_stmt 1 view .LVU130
+ 131:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
+ 458              		.loc 1 131 7 is_stmt 0 view .LVU131
  459 0102 9969     		ldr	r1, [r3, #24]
  460 0104 8846     		mov	r8, r1
- 133:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
- 461              		.loc 1 133 15 view .LVU132
+ 131:Src/main.c    ****   // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_
+ 461              		.loc 1 131 15 view .LVU132
  462 0106 8021     		movs	r1, #128
  463 0108 C901     		lsls	r1, r1, #7
  464 010a 4246     		mov	r2, r8
  465 010c 1143     		orrs	r1, r2
  466 010e 9961     		str	r1, [r3, #24]
- 135:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
- 467              		.loc 1 135 3 is_stmt 1 view .LVU133
- 135:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
- 468              		.loc 1 135 7 is_stmt 0 view .LVU134
+ 133:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
+ 467              		.loc 1 133 3 is_stmt 1 view .LVU133
+ 133:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
+ 468              		.loc 1 133 7 is_stmt 0 view .LVU134
  469 0110 9969     		ldr	r1, [r3, #24]
- 135:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
- 470              		.loc 1 135 15 view .LVU135
+ 133:Src/main.c    ****   TIM3->CCMR1 |= (1 << 11);
+ 470              		.loc 1 133 15 view .LVU135
  471 0112 0822     		movs	r2, #8
  472 0114 1143     		orrs	r1, r2
  473 0116 9961     		str	r1, [r3, #24]
- 136:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
- 474              		.loc 1 136 3 is_stmt 1 view .LVU136
- 136:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
- 475              		.loc 1 136 7 is_stmt 0 view .LVU137
+ 134:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
+ 474              		.loc 1 134 3 is_stmt 1 view .LVU136
+ 134:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
+ 475              		.loc 1 134 7 is_stmt 0 view .LVU137
  476 0118 9A69     		ldr	r2, [r3, #24]
- 136:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
- 477              		.loc 1 136 15 view .LVU138
+ 134:Src/main.c    ****   // 4) Set the output enable bits for channels 1 & 2 in the CCER register
+ 477              		.loc 1 134 15 view .LVU138
  478 011a 8021     		movs	r1, #128
  479 011c 0901     		lsls	r1, r1, #4
  480 011e 1143     		orrs	r1, r2
  481 0120 9961     		str	r1, [r3, #24]
- 138:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
- 482              		.loc 1 138 3 is_stmt 1 view .LVU139
- 138:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
- 483              		.loc 1 138 7 is_stmt 0 view .LVU140
+ 136:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
+ 482              		.loc 1 136 3 is_stmt 1 view .LVU139
+ 136:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
+ 483              		.loc 1 136 7 is_stmt 0 view .LVU140
  484 0122 196A     		ldr	r1, [r3, #32]
- 138:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
- 485              		.loc 1 138 14 view .LVU141
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 16
-
-
+ 136:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
+ 485              		.loc 1 136 14 view .LVU141
  486 0124 2943     		orrs	r1, r5
  487 0126 1962     		str	r1, [r3, #32]
- 139:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
- 488              		.loc 1 139 3 is_stmt 1 view .LVU142
- 139:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
- 489              		.loc 1 139 7 is_stmt 0 view .LVU143
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 16
+
+
+ 137:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
+ 488              		.loc 1 137 3 is_stmt 1 view .LVU142
+ 137:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
+ 489              		.loc 1 137 7 is_stmt 0 view .LVU143
  490 0128 196A     		ldr	r1, [r3, #32]
- 139:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
- 491              		.loc 1 139 14 view .LVU144
+ 137:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
+ 491              		.loc 1 137 14 view .LVU144
  492 012a 3943     		orrs	r1, r7
  493 012c 1962     		str	r1, [r3, #32]
- 141:Src/main.c    ****   TIM3->CCR2 = 2000;
- 494              		.loc 1 141 2 is_stmt 1 view .LVU145
- 141:Src/main.c    ****   TIM3->CCR2 = 2000;
- 495              		.loc 1 141 13 is_stmt 0 view .LVU146
+ 139:Src/main.c    ****   TIM3->CCR2 = 2000;
+ 494              		.loc 1 139 2 is_stmt 1 view .LVU145
+ 139:Src/main.c    ****   TIM3->CCR2 = 2000;
+ 495              		.loc 1 139 13 is_stmt 0 view .LVU146
  496 012e FA21     		movs	r1, #250
  497 0130 C900     		lsls	r1, r1, #3
  498 0132 5963     		str	r1, [r3, #52]
- 142:Src/main.c    ****   // Enable Timer 3
- 499              		.loc 1 142 3 is_stmt 1 view .LVU147
- 142:Src/main.c    ****   // Enable Timer 3
- 500              		.loc 1 142 14 is_stmt 0 view .LVU148
+ 140:Src/main.c    ****   // Enable Timer 3
+ 499              		.loc 1 140 3 is_stmt 1 view .LVU147
+ 140:Src/main.c    ****   // Enable Timer 3
+ 500              		.loc 1 140 14 is_stmt 0 view .LVU148
  501 0134 9963     		str	r1, [r3, #56]
- 144:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 502              		.loc 1 144 3 is_stmt 1 view .LVU149
- 144:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 503              		.loc 1 144 7 is_stmt 0 view .LVU150
+ 142:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
+ 502              		.loc 1 142 3 is_stmt 1 view .LVU149
+ 142:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
+ 503              		.loc 1 142 7 is_stmt 0 view .LVU150
  504 0136 1968     		ldr	r1, [r3]
- 144:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 505              		.loc 1 144 13 view .LVU151
+ 142:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
+ 505              		.loc 1 142 13 view .LVU151
  506 0138 2943     		orrs	r1, r5
  507 013a 1960     		str	r1, [r3]
- 151:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
- 508              		.loc 1 151 3 is_stmt 1 view .LVU152
- 151:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
- 509              		.loc 1 151 8 is_stmt 0 view .LVU153
+ 149:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
+ 508              		.loc 1 149 3 is_stmt 1 view .LVU152
+ 149:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
+ 509              		.loc 1 149 8 is_stmt 0 view .LVU153
  510 013c 2368     		ldr	r3, [r4]
- 151:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
- 511              		.loc 1 151 16 view .LVU154
+ 149:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
+ 511              		.loc 1 149 16 view .LVU154
  512 013e 6246     		mov	r2, ip
  513 0140 1340     		ands	r3, r2
  514 0142 2360     		str	r3, [r4]
- 152:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
- 515              		.loc 1 152 3 is_stmt 1 view .LVU155
- 152:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
- 516              		.loc 1 152 8 is_stmt 0 view .LVU156
+ 150:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
+ 515              		.loc 1 150 3 is_stmt 1 view .LVU155
+ 150:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
+ 516              		.loc 1 150 8 is_stmt 0 view .LVU156
  517 0144 2368     		ldr	r3, [r4]
- 152:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
- 518              		.loc 1 152 16 view .LVU157
+ 150:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
+ 518              		.loc 1 150 16 view .LVU157
  519 0146 3340     		ands	r3, r6
  520 0148 2360     		str	r3, [r4]
- 153:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
- 521              		.loc 1 153 3 is_stmt 1 view .LVU158
- 153:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
- 522              		.loc 1 153 8 is_stmt 0 view .LVU159
+ 151:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
+ 521              		.loc 1 151 3 is_stmt 1 view .LVU158
+ 151:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
+ 522              		.loc 1 151 8 is_stmt 0 view .LVU159
  523 014a 2368     		ldr	r3, [r4]
- 153:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 17
-
-
- 524              		.loc 1 153 16 view .LVU160
+ 151:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
+ 524              		.loc 1 151 16 view .LVU160
  525 014c 4A46     		mov	r2, r9
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 17
+
+
  526 014e 1A43     		orrs	r2, r3
  527 0150 2260     		str	r2, [r4]
- 155:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
- 528              		.loc 1 155 3 is_stmt 1 view .LVU161
- 155:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
- 529              		.loc 1 155 8 is_stmt 0 view .LVU162
+ 153:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
+ 528              		.loc 1 153 3 is_stmt 1 view .LVU161
+ 153:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
+ 529              		.loc 1 153 8 is_stmt 0 view .LVU162
  530 0152 2368     		ldr	r3, [r4]
- 155:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
- 531              		.loc 1 155 16 view .LVU163
+ 153:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
+ 531              		.loc 1 153 16 view .LVU163
  532 0154 0340     		ands	r3, r0
  533 0156 2360     		str	r3, [r4]
- 156:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
- 534              		.loc 1 156 3 is_stmt 1 view .LVU164
- 156:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
- 535              		.loc 1 156 8 is_stmt 0 view .LVU165
+ 154:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
+ 534              		.loc 1 154 3 is_stmt 1 view .LVU164
+ 154:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
+ 535              		.loc 1 154 8 is_stmt 0 view .LVU165
  536 0158 2368     		ldr	r3, [r4]
- 156:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
- 537              		.loc 1 156 16 view .LVU166
+ 154:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
+ 537              		.loc 1 154 16 view .LVU166
  538 015a 154A     		ldr	r2, .L15+40
  539 015c 1340     		ands	r3, r2
  540 015e 2360     		str	r3, [r4]
- 157:Src/main.c    ****   // Assign AF0 to PC6 and PC7
- 541              		.loc 1 157 3 is_stmt 1 view .LVU167
- 157:Src/main.c    ****   // Assign AF0 to PC6 and PC7
- 542              		.loc 1 157 8 is_stmt 0 view .LVU168
+ 155:Src/main.c    ****   // Assign AF0 to PC6 and PC7
+ 541              		.loc 1 155 3 is_stmt 1 view .LVU167
+ 155:Src/main.c    ****   // Assign AF0 to PC6 and PC7
+ 542              		.loc 1 155 8 is_stmt 0 view .LVU168
  543 0160 2368     		ldr	r3, [r4]
- 157:Src/main.c    ****   // Assign AF0 to PC6 and PC7
- 544              		.loc 1 157 16 view .LVU169
+ 155:Src/main.c    ****   // Assign AF0 to PC6 and PC7
+ 544              		.loc 1 155 16 view .LVU169
  545 0162 8021     		movs	r1, #128
  546 0164 0902     		lsls	r1, r1, #8
  547 0166 0B43     		orrs	r3, r1
  548 0168 2360     		str	r3, [r4]
- 160:Src/main.c    **** 
- 549              		.loc 1 160 3 is_stmt 1 view .LVU170
- 160:Src/main.c    **** 
- 550              		.loc 1 160 13 is_stmt 0 view .LVU171
+ 158:Src/main.c    **** 
+ 549              		.loc 1 158 3 is_stmt 1 view .LVU170
+ 158:Src/main.c    **** 
+ 550              		.loc 1 158 13 is_stmt 0 view .LVU171
  551 016a 236A     		ldr	r3, [r4, #32]
- 160:Src/main.c    **** 
- 552              		.loc 1 160 17 view .LVU172
+ 158:Src/main.c    **** 
+ 552              		.loc 1 158 17 view .LVU172
  553 016c 2362     		str	r3, [r4, #32]
- 164:Src/main.c    **** 	//Set the priority for the interrupt to 2
- 554              		.loc 1 164 2 is_stmt 1 view .LVU173
+ 162:Src/main.c    **** 	//Set the priority for the interrupt to 2
+ 554              		.loc 1 162 2 is_stmt 1 view .LVU173
  555              	.LVL17:
  556              	.LBB12:
  557              	.LBI12:
@@ -1018,11 +1016,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
    7:Drivers/CMSIS/Include/core_cm0.h **** /*
    8:Drivers/CMSIS/Include/core_cm0.h ****  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
    9:Drivers/CMSIS/Include/core_cm0.h ****  *
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 18
-
-
   10:Drivers/CMSIS/Include/core_cm0.h ****  * SPDX-License-Identifier: Apache-2.0
   11:Drivers/CMSIS/Include/core_cm0.h ****  *
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 18
+
+
   12:Drivers/CMSIS/Include/core_cm0.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
   13:Drivers/CMSIS/Include/core_cm0.h ****  * not use this file except in compliance with the License.
   14:Drivers/CMSIS/Include/core_cm0.h ****  * You may obtain a copy of the License at
@@ -1078,11 +1076,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
   64:Drivers/CMSIS/Include/core_cm0.h ****  
   65:Drivers/CMSIS/Include/core_cm0.h **** /*  CMSIS CM0 definitions */
   66:Drivers/CMSIS/Include/core_cm0.h **** #define __CM0_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)              /*!< \deprecated [31:16] C
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 19
-
-
   67:Drivers/CMSIS/Include/core_cm0.h **** #define __CM0_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)               /*!< \deprecated [15:0]  C
   68:Drivers/CMSIS/Include/core_cm0.h **** #define __CM0_CMSIS_VERSION       ((__CM0_CMSIS_VERSION_MAIN << 16U) | \
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 19
+
+
   69:Drivers/CMSIS/Include/core_cm0.h ****                                     __CM0_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL
   70:Drivers/CMSIS/Include/core_cm0.h **** 
   71:Drivers/CMSIS/Include/core_cm0.h **** #define __CORTEX_M                (0U)                                   /*!< Cortex-M Core */
@@ -1138,11 +1136,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  121:Drivers/CMSIS/Include/core_cm0.h **** 
  122:Drivers/CMSIS/Include/core_cm0.h **** #endif /* __CORE_CM0_H_GENERIC */
  123:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 20
-
-
  124:Drivers/CMSIS/Include/core_cm0.h **** #ifndef __CMSIS_GENERIC
  125:Drivers/CMSIS/Include/core_cm0.h **** 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 20
+
+
  126:Drivers/CMSIS/Include/core_cm0.h **** #ifndef __CORE_CM0_H_DEPENDANT
  127:Drivers/CMSIS/Include/core_cm0.h **** #define __CORE_CM0_H_DEPENDANT
  128:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1198,11 +1196,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  178:Drivers/CMSIS/Include/core_cm0.h ****   Core Register contain:
  179:Drivers/CMSIS/Include/core_cm0.h ****   - Core Register
  180:Drivers/CMSIS/Include/core_cm0.h ****   - Core NVIC Register
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 21
-
-
  181:Drivers/CMSIS/Include/core_cm0.h ****   - Core SCB Register
  182:Drivers/CMSIS/Include/core_cm0.h ****   - Core SysTick Register
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 21
+
+
  183:Drivers/CMSIS/Include/core_cm0.h ****  ******************************************************************************/
  184:Drivers/CMSIS/Include/core_cm0.h **** /**
  185:Drivers/CMSIS/Include/core_cm0.h ****   \defgroup CMSIS_core_register Defines and Type Definitions
@@ -1258,11 +1256,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  235:Drivers/CMSIS/Include/core_cm0.h ****   } b;                                   /*!< Structure used for bit  access */
  236:Drivers/CMSIS/Include/core_cm0.h ****   uint32_t w;                            /*!< Type      used for word access */
  237:Drivers/CMSIS/Include/core_cm0.h **** } IPSR_Type;
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 22
-
-
  238:Drivers/CMSIS/Include/core_cm0.h **** 
  239:Drivers/CMSIS/Include/core_cm0.h **** /* IPSR Register Definitions */
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 22
+
+
  240:Drivers/CMSIS/Include/core_cm0.h **** #define IPSR_ISR_Pos                        0U                                            /*!< IPSR
  241:Drivers/CMSIS/Include/core_cm0.h **** #define IPSR_ISR_Msk                       (0x1FFUL /*<< IPSR_ISR_Pos*/)                  /*!< IPSR
  242:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1318,11 +1316,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  292:Drivers/CMSIS/Include/core_cm0.h ****     uint32_t _reserved1:30;              /*!< bit:  2..31  Reserved */
  293:Drivers/CMSIS/Include/core_cm0.h ****   } b;                                   /*!< Structure used for bit  access */
  294:Drivers/CMSIS/Include/core_cm0.h ****   uint32_t w;                            /*!< Type      used for word access */
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 23
-
-
  295:Drivers/CMSIS/Include/core_cm0.h **** } CONTROL_Type;
  296:Drivers/CMSIS/Include/core_cm0.h **** 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 23
+
+
  297:Drivers/CMSIS/Include/core_cm0.h **** /* CONTROL Register Definitions */
  298:Drivers/CMSIS/Include/core_cm0.h **** #define CONTROL_SPSEL_Pos                   1U                                            /*!< CONT
  299:Drivers/CMSIS/Include/core_cm0.h **** #define CONTROL_SPSEL_Msk                  (1UL << CONTROL_SPSEL_Pos)                     /*!< CONT
@@ -1378,11 +1376,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  349:Drivers/CMSIS/Include/core_cm0.h ****         uint32_t RESERVED1;
  350:Drivers/CMSIS/Include/core_cm0.h ****   __IOM uint32_t SHP[2U];                /*!< Offset: 0x01C (R/W)  System Handlers Priority Registe
  351:Drivers/CMSIS/Include/core_cm0.h ****   __IOM uint32_t SHCSR;                  /*!< Offset: 0x024 (R/W)  System Handler Control and State
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 24
-
-
  352:Drivers/CMSIS/Include/core_cm0.h **** } SCB_Type;
  353:Drivers/CMSIS/Include/core_cm0.h **** 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 24
+
+
  354:Drivers/CMSIS/Include/core_cm0.h **** /* SCB CPUID Register Definitions */
  355:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_CPUID_IMPLEMENTER_Pos          24U                                            /*!< SCB 
  356:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_CPUID_IMPLEMENTER_Msk          (0xFFUL << SCB_CPUID_IMPLEMENTER_Pos)          /*!< SCB 
@@ -1438,11 +1436,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  406:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_ENDIANESS_Msk            (1UL << SCB_AIRCR_ENDIANESS_Pos)               /*!< SCB 
  407:Drivers/CMSIS/Include/core_cm0.h **** 
  408:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_SYSRESETREQ_Pos           2U                                            /*!< SCB 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 25
-
-
  409:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_SYSRESETREQ_Msk          (1UL << SCB_AIRCR_SYSRESETREQ_Pos)             /*!< SCB 
  410:Drivers/CMSIS/Include/core_cm0.h **** 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 25
+
+
  411:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_VECTCLRACTIVE_Pos         1U                                            /*!< SCB 
  412:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_VECTCLRACTIVE_Msk        (1UL << SCB_AIRCR_VECTCLRACTIVE_Pos)           /*!< SCB 
  413:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1498,11 +1496,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  463:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_TICKINT_Pos            1U                                            /*!< SysT
  464:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_TICKINT_Msk           (1UL << SysTick_CTRL_TICKINT_Pos)              /*!< SysT
  465:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 26
-
-
  466:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_ENABLE_Pos             0U                                            /*!< SysT
  467:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_ENABLE_Msk            (1UL /*<< SysTick_CTRL_ENABLE_Pos*/)           /*!< SysT
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 26
+
+
  468:Drivers/CMSIS/Include/core_cm0.h **** 
  469:Drivers/CMSIS/Include/core_cm0.h **** /* SysTick Reload Register Definitions */
  470:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_LOAD_RELOAD_Pos             0U                                            /*!< SysT
@@ -1558,11 +1556,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  520:Drivers/CMSIS/Include/core_cm0.h **** */
  521:Drivers/CMSIS/Include/core_cm0.h **** #define _FLD2VAL(field, value)    (((uint32_t)(value) & field ## _Msk) >> field ## _Pos)
  522:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 27
-
-
  523:Drivers/CMSIS/Include/core_cm0.h **** /*@} end of group CMSIS_core_bitfield */
  524:Drivers/CMSIS/Include/core_cm0.h **** 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 27
+
+
  525:Drivers/CMSIS/Include/core_cm0.h **** 
  526:Drivers/CMSIS/Include/core_cm0.h **** /**
  527:Drivers/CMSIS/Include/core_cm0.h ****   \ingroup    CMSIS_core_register
@@ -1618,11 +1616,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  577:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_EnableIRQ              __NVIC_EnableIRQ
  578:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_GetEnableIRQ           __NVIC_GetEnableIRQ
  579:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_DisableIRQ             __NVIC_DisableIRQ
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 28
-
-
  580:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_GetPendingIRQ          __NVIC_GetPendingIRQ
  581:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_SetPendingIRQ          __NVIC_SetPendingIRQ
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 28
+
+
  582:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_ClearPendingIRQ        __NVIC_ClearPendingIRQ
  583:Drivers/CMSIS/Include/core_cm0.h **** /*#define NVIC_GetActive              __NVIC_GetActive             not available for Cortex-M0 */
  584:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_SetPriority            __NVIC_SetPriority
@@ -1678,13 +1676,13 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  565 0170 1160     		str	r1, [r2]
  566              	.LVL18:
  567              		.loc 2 627 20 view .LVU178
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 29
-
-
  568              	.LBE13:
  569              	.LBE12:
- 166:Src/main.c    **** 	
- 570              		.loc 1 166 2 is_stmt 1 view .LVU179
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 29
+
+
+ 164:Src/main.c    **** 	
+ 570              		.loc 1 164 2 is_stmt 1 view .LVU179
  571              	.LBB14:
  572              	.LBI14:
  628:Drivers/CMSIS/Include/core_cm0.h ****   }
@@ -1738,11 +1736,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  676:Drivers/CMSIS/Include/core_cm0.h ****   \note    IRQn must not be negative.
  677:Drivers/CMSIS/Include/core_cm0.h ****  */
  678:Drivers/CMSIS/Include/core_cm0.h **** __STATIC_INLINE uint32_t __NVIC_GetPendingIRQ(IRQn_Type IRQn)
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 30
-
-
  679:Drivers/CMSIS/Include/core_cm0.h **** {
  680:Drivers/CMSIS/Include/core_cm0.h ****   if ((int32_t)(IRQn) >= 0)
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 30
+
+
  681:Drivers/CMSIS/Include/core_cm0.h ****   {
  682:Drivers/CMSIS/Include/core_cm0.h ****     return((uint32_t)(((NVIC->ISPR[0U] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL)
  683:Drivers/CMSIS/Include/core_cm0.h ****   }
@@ -1798,11 +1796,11 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  731:Drivers/CMSIS/Include/core_cm0.h **** {
  732:Drivers/CMSIS/Include/core_cm0.h ****   if ((int32_t)(IRQn) >= 0)
  575              		.loc 2 732 3 view .LVU181
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 31
-
-
  733:Drivers/CMSIS/Include/core_cm0.h ****   {
  734:Drivers/CMSIS/Include/core_cm0.h ****     NVIC->IP[_IP_IDX(IRQn)]  = ((uint32_t)(NVIC->IP[_IP_IDX(IRQn)]  & ~(0xFFUL << _BIT_SHIFT(IRQn))
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 31
+
+
  576              		.loc 2 734 5 view .LVU182
  577              		.loc 2 734 52 is_stmt 0 view .LVU183
  578 0172 C320     		movs	r0, #195
@@ -1822,12 +1820,12 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  592              		.loc 2 734 30 view .LVU187
  593              	.LBE15:
  594              	.LBE14:
- 169:Src/main.c    **** 	}
- 595              		.loc 1 169 2 is_stmt 1 view .LVU188
- 170:Src/main.c    **** }
- 596              		.loc 1 170 2 view .LVU189
- 169:Src/main.c    **** 	}
- 597              		.loc 1 169 8 view .LVU190
+ 167:Src/main.c    **** 	}
+ 595              		.loc 1 167 2 is_stmt 1 view .LVU188
+ 168:Src/main.c    **** }
+ 596              		.loc 1 168 2 view .LVU189
+ 167:Src/main.c    **** 	}
+ 597              		.loc 1 167 8 view .LVU190
  598 0184 FEE7     		b	.L14
  599              	.L16:
  600 0186 C046     		.align	2
@@ -1857,23 +1855,23 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 1
  625              		.file 9 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
  626              		.file 10 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
  627              		.file 11 "<built-in>"
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s 			page 32
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 32
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:19     .text.TIM2_IRQHandler:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:25     .text.TIM2_IRQHandler:00000000 TIM2_IRQHandler
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:64     .text.TIM2_IRQHandler:00000028 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:69     .text._Error_Handler:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:75     .text._Error_Handler:00000000 _Error_Handler
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:93     .rodata.SystemClock_Config.str1.4:00000000 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:98     .text.SystemClock_Config:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:104    .text.SystemClock_Config:00000000 SystemClock_Config
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:207    .text.SystemClock_Config:0000006c $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:212    .text.main:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:218    .text.main:00000000 main
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccSYBqS9.s:602    .text.main:00000188 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:19     .text.TIM2_IRQHandler:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:25     .text.TIM2_IRQHandler:00000000 TIM2_IRQHandler
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:64     .text.TIM2_IRQHandler:00000028 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:69     .text._Error_Handler:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:75     .text._Error_Handler:00000000 _Error_Handler
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:93     .rodata.SystemClock_Config.str1.4:00000000 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:98     .text.SystemClock_Config:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:104    .text.SystemClock_Config:00000000 SystemClock_Config
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:207    .text.SystemClock_Config:0000006c $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:212    .text.main:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:218    .text.main:00000000 main
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:602    .text.main:00000188 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_TogglePin
