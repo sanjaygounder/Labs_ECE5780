@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
   30:Src/main.c    ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   31:Src/main.c    ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   32:Src/main.c    ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 2
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 2
 
 
   33:Src/main.c    ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
   87:Src/main.c    **** 	GPIO_InitTypeDef initStr = {GPIO_PIN_6 | GPIO_PIN_7| GPIO_PIN_8 | GPIO_PIN_9,
   88:Src/main.c    **** 	GPIO_MODE_OUTPUT_PP,
   89:Src/main.c    **** 	GPIO_SPEED_FREQ_LOW,
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 3
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 3
 
 
   90:Src/main.c    **** 	GPIO_NOPULL};
@@ -170,15 +170,15 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  136:Src/main.c    ****   TIM3->CCER |= (1 << 0); // channel 1 (bit 0)
  137:Src/main.c    ****   TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
  138:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
- 139:Src/main.c    **** 	TIM3->CCR1 = 2000;
- 140:Src/main.c    ****   TIM3->CCR2 = 2000;
+ 139:Src/main.c    **** 	TIM3->CCR1 = 2000; //change this to see rate changes on Analog Discovery 2
+ 140:Src/main.c    ****   TIM3->CCR2 = 3000; //change this to see rate changes on Analog Discovery 2
  141:Src/main.c    ****   // Enable Timer 3
  142:Src/main.c    ****   TIM3->CR1 |= (1 << 0);
  143:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
  144:Src/main.c    **** 
  145:Src/main.c    ****   // **** Alternate Function **** //
  146:Src/main.c    ****   //PC6 = TIM3_CH1 (AF0)
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 4
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 4
 
 
  147:Src/main.c    ****   //PC7 = TIM3_CH2 (AF0)
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  179:Src/main.c    **** 	TIM2->SR &= ~(TIM_SR_UIF);
   49              		.loc 1 179 2 view .LVU3
   50              		.loc 1 179 6 is_stmt 0 view .LVU4
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 5
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 5
 
 
   51 0018 8022     		movs	r2, #128
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  210:Src/main.c    ****   {
  211:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
  212:Src/main.c    ****   }
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 6
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 6
 
 
  213:Src/main.c    **** 
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  100              		.syntax unified
  101              		.code	16
  102              		.thumb_func
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 7
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 7
 
 
  104              	SystemClock_Config:
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  143              		.loc 1 203 3 is_stmt 1 view .LVU25
  203:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1;
  144              		.loc 1 203 31 is_stmt 0 view .LVU26
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 8
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 8
 
 
  145 001e 0723     		movs	r3, #7
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  185 0052 4042     		rsbs	r0, r0, #0
  186 0054 FFF7FEFF 		bl	HAL_NVIC_SetPriority
  187              	.LVL9:
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 9
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 9
 
 
  224:Src/main.c    **** 
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  240              	.LCFI5:
  241              		.cfi_def_cfa_offset 64
   79:Src/main.c    **** 	SystemClock_Config(); //Configure the system clock
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 10
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 10
 
 
  242              		.loc 1 79 2 view .LVU45
@@ -598,7 +598,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  282              		.loc 1 85 3 view .LVU59
  283              	.LBB11:
   85:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 11
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 11
 
 
  284              		.loc 1 85 3 view .LVU60
@@ -658,7 +658,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  100:Src/main.c    **** 	TIM2->ARR = 250;
  326              		.loc 1 100 2 view .LVU73
  100:Src/main.c    **** 	TIM2->ARR = 250;
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 12
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 12
 
 
  327              		.loc 1 100 12 is_stmt 0 view .LVU74
@@ -718,7 +718,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
  365              		.loc 1 114 3 is_stmt 1 view .LVU91
  114:Src/main.c    ****   TIM3->CCMR1 &= ~(1 << 9); 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 13
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 13
 
 
  366              		.loc 1 114 7 is_stmt 0 view .LVU92
@@ -778,7 +778,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  404 00c2 3A43     		orrs	r2, r7
  405 00c4 9A61     		str	r2, [r3, #24]
  122:Src/main.c    ****   TIM3->CCMR1 |=(1 << 6); 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 14
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 14
 
 
  406              		.loc 1 122 3 is_stmt 1 view .LVU109
@@ -838,7 +838,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  443              		.loc 1 129 15 view .LVU126
  444 00ee 8022     		movs	r2, #128
  445 00f0 5201     		lsls	r2, r2, #5
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 15
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 15
 
 
  446 00f2 0A43     		orrs	r2, r1
@@ -898,7 +898,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  485              		.loc 1 136 14 view .LVU141
  486 0124 2943     		orrs	r1, r5
  487 0126 1962     		str	r1, [r3, #32]
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 16
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 16
 
 
  137:Src/main.c    ****   // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
@@ -910,9 +910,9 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  491              		.loc 1 137 14 view .LVU144
  492 012a 3943     		orrs	r1, r7
  493 012c 1962     		str	r1, [r3, #32]
- 139:Src/main.c    ****   TIM3->CCR2 = 2000;
+ 139:Src/main.c    ****   TIM3->CCR2 = 3000; //change this to see rate changes on Analog Discovery 2
  494              		.loc 1 139 2 is_stmt 1 view .LVU145
- 139:Src/main.c    ****   TIM3->CCR2 = 2000;
+ 139:Src/main.c    ****   TIM3->CCR2 = 3000; //change this to see rate changes on Analog Discovery 2
  495              		.loc 1 139 13 is_stmt 0 view .LVU146
  496 012e FA21     		movs	r1, #250
  497 0130 C900     		lsls	r1, r1, #3
@@ -921,92 +921,93 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  499              		.loc 1 140 3 is_stmt 1 view .LVU147
  140:Src/main.c    ****   // Enable Timer 3
  500              		.loc 1 140 14 is_stmt 0 view .LVU148
- 501 0134 9963     		str	r1, [r3, #56]
+ 501 0134 1E49     		ldr	r1, .L15+40
+ 502 0136 9963     		str	r1, [r3, #56]
  142:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 502              		.loc 1 142 3 is_stmt 1 view .LVU149
+ 503              		.loc 1 142 3 is_stmt 1 view .LVU149
  142:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 503              		.loc 1 142 7 is_stmt 0 view .LVU150
- 504 0136 1968     		ldr	r1, [r3]
+ 504              		.loc 1 142 7 is_stmt 0 view .LVU150
+ 505 0138 1968     		ldr	r1, [r3]
  142:Src/main.c    ****   // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
- 505              		.loc 1 142 13 view .LVU151
- 506 0138 2943     		orrs	r1, r5
- 507 013a 1960     		str	r1, [r3]
+ 506              		.loc 1 142 13 view .LVU151
+ 507 013a 2943     		orrs	r1, r5
+ 508 013c 1960     		str	r1, [r3]
  149:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
- 508              		.loc 1 149 3 is_stmt 1 view .LVU152
+ 509              		.loc 1 149 3 is_stmt 1 view .LVU152
  149:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
- 509              		.loc 1 149 8 is_stmt 0 view .LVU153
- 510 013c 2368     		ldr	r3, [r4]
+ 510              		.loc 1 149 8 is_stmt 0 view .LVU153
+ 511 013e 2368     		ldr	r3, [r4]
  149:Src/main.c    ****   GPIOC->MODER &= ~(1<< 13); //clear bits
- 511              		.loc 1 149 16 view .LVU154
- 512 013e 6246     		mov	r2, ip
- 513 0140 1340     		ands	r3, r2
- 514 0142 2360     		str	r3, [r4]
+ 512              		.loc 1 149 16 view .LVU154
+ 513 0140 6246     		mov	r2, ip
+ 514 0142 1340     		ands	r3, r2
+ 515 0144 2360     		str	r3, [r4]
  150:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
- 515              		.loc 1 150 3 is_stmt 1 view .LVU155
+ 516              		.loc 1 150 3 is_stmt 1 view .LVU155
  150:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
- 516              		.loc 1 150 8 is_stmt 0 view .LVU156
- 517 0144 2368     		ldr	r3, [r4]
+ 517              		.loc 1 150 8 is_stmt 0 view .LVU156
+ 518 0146 2368     		ldr	r3, [r4]
  150:Src/main.c    ****   GPIOC->MODER |= (1<< 13); // set to alternate
- 518              		.loc 1 150 16 view .LVU157
- 519 0146 3340     		ands	r3, r6
- 520 0148 2360     		str	r3, [r4]
+ 519              		.loc 1 150 16 view .LVU157
+ 520 0148 3340     		ands	r3, r6
+ 521 014a 2360     		str	r3, [r4]
  151:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
- 521              		.loc 1 151 3 is_stmt 1 view .LVU158
+ 522              		.loc 1 151 3 is_stmt 1 view .LVU158
  151:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
- 522              		.loc 1 151 8 is_stmt 0 view .LVU159
- 523 014a 2368     		ldr	r3, [r4]
+ 523              		.loc 1 151 8 is_stmt 0 view .LVU159
+ 524 014c 2368     		ldr	r3, [r4]
  151:Src/main.c    ****   // Clear Blue MODER7 and then set to alternate (10)
- 524              		.loc 1 151 16 view .LVU160
- 525 014c 4A46     		mov	r2, r9
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 17
+ 525              		.loc 1 151 16 view .LVU160
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 17
 
 
- 526 014e 1A43     		orrs	r2, r3
- 527 0150 2260     		str	r2, [r4]
+ 526 014e 4A46     		mov	r2, r9
+ 527 0150 1A43     		orrs	r2, r3
+ 528 0152 2260     		str	r2, [r4]
  153:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
- 528              		.loc 1 153 3 is_stmt 1 view .LVU161
+ 529              		.loc 1 153 3 is_stmt 1 view .LVU161
  153:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
- 529              		.loc 1 153 8 is_stmt 0 view .LVU162
- 530 0152 2368     		ldr	r3, [r4]
+ 530              		.loc 1 153 8 is_stmt 0 view .LVU162
+ 531 0154 2368     		ldr	r3, [r4]
  153:Src/main.c    ****   GPIOC->MODER &= ~(1<< 15); //clear bit
- 531              		.loc 1 153 16 view .LVU163
- 532 0154 0340     		ands	r3, r0
- 533 0156 2360     		str	r3, [r4]
+ 532              		.loc 1 153 16 view .LVU163
+ 533 0156 0340     		ands	r3, r0
+ 534 0158 2360     		str	r3, [r4]
  154:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
- 534              		.loc 1 154 3 is_stmt 1 view .LVU164
+ 535              		.loc 1 154 3 is_stmt 1 view .LVU164
  154:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
- 535              		.loc 1 154 8 is_stmt 0 view .LVU165
- 536 0158 2368     		ldr	r3, [r4]
+ 536              		.loc 1 154 8 is_stmt 0 view .LVU165
+ 537 015a 2368     		ldr	r3, [r4]
  154:Src/main.c    ****   GPIOC->MODER |= (1<< 15); //set to alternate
- 537              		.loc 1 154 16 view .LVU166
- 538 015a 154A     		ldr	r2, .L15+40
- 539 015c 1340     		ands	r3, r2
- 540 015e 2360     		str	r3, [r4]
+ 538              		.loc 1 154 16 view .LVU166
+ 539 015c 154A     		ldr	r2, .L15+44
+ 540 015e 1340     		ands	r3, r2
+ 541 0160 2360     		str	r3, [r4]
  155:Src/main.c    ****   // Assign AF0 to PC6 and PC7
- 541              		.loc 1 155 3 is_stmt 1 view .LVU167
+ 542              		.loc 1 155 3 is_stmt 1 view .LVU167
  155:Src/main.c    ****   // Assign AF0 to PC6 and PC7
- 542              		.loc 1 155 8 is_stmt 0 view .LVU168
- 543 0160 2368     		ldr	r3, [r4]
+ 543              		.loc 1 155 8 is_stmt 0 view .LVU168
+ 544 0162 2368     		ldr	r3, [r4]
  155:Src/main.c    ****   // Assign AF0 to PC6 and PC7
- 544              		.loc 1 155 16 view .LVU169
- 545 0162 8021     		movs	r1, #128
- 546 0164 0902     		lsls	r1, r1, #8
- 547 0166 0B43     		orrs	r3, r1
- 548 0168 2360     		str	r3, [r4]
+ 545              		.loc 1 155 16 view .LVU169
+ 546 0164 8021     		movs	r1, #128
+ 547 0166 0902     		lsls	r1, r1, #8
+ 548 0168 0B43     		orrs	r3, r1
+ 549 016a 2360     		str	r3, [r4]
  158:Src/main.c    **** 
- 549              		.loc 1 158 3 is_stmt 1 view .LVU170
+ 550              		.loc 1 158 3 is_stmt 1 view .LVU170
  158:Src/main.c    **** 
- 550              		.loc 1 158 13 is_stmt 0 view .LVU171
- 551 016a 236A     		ldr	r3, [r4, #32]
+ 551              		.loc 1 158 13 is_stmt 0 view .LVU171
+ 552 016c 236A     		ldr	r3, [r4, #32]
  158:Src/main.c    **** 
- 552              		.loc 1 158 17 view .LVU172
- 553 016c 2362     		str	r3, [r4, #32]
+ 553              		.loc 1 158 17 view .LVU172
+ 554 016e 2362     		str	r3, [r4, #32]
  162:Src/main.c    **** 	//Set the priority for the interrupt to 2
- 554              		.loc 1 162 2 is_stmt 1 view .LVU173
- 555              	.LVL17:
- 556              	.LBB12:
- 557              	.LBI12:
- 558              		.file 2 "Drivers/CMSIS/Include/core_cm0.h"
+ 555              		.loc 1 162 2 is_stmt 1 view .LVU173
+ 556              	.LVL17:
+ 557              	.LBB12:
+ 558              	.LBI12:
+ 559              		.file 2 "Drivers/CMSIS/Include/core_cm0.h"
    1:Drivers/CMSIS/Include/core_cm0.h **** /**************************************************************************//**
    2:Drivers/CMSIS/Include/core_cm0.h ****  * @file     core_cm0.h
    3:Drivers/CMSIS/Include/core_cm0.h ****  * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
@@ -1017,10 +1018,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
    8:Drivers/CMSIS/Include/core_cm0.h ****  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
    9:Drivers/CMSIS/Include/core_cm0.h ****  *
   10:Drivers/CMSIS/Include/core_cm0.h ****  * SPDX-License-Identifier: Apache-2.0
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 18
+
+
   11:Drivers/CMSIS/Include/core_cm0.h ****  *
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 18
-
-
   12:Drivers/CMSIS/Include/core_cm0.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
   13:Drivers/CMSIS/Include/core_cm0.h ****  * not use this file except in compliance with the License.
   14:Drivers/CMSIS/Include/core_cm0.h ****  * You may obtain a copy of the License at
@@ -1077,10 +1078,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
   65:Drivers/CMSIS/Include/core_cm0.h **** /*  CMSIS CM0 definitions */
   66:Drivers/CMSIS/Include/core_cm0.h **** #define __CM0_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)              /*!< \deprecated [31:16] C
   67:Drivers/CMSIS/Include/core_cm0.h **** #define __CM0_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)               /*!< \deprecated [15:0]  C
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 19
+
+
   68:Drivers/CMSIS/Include/core_cm0.h **** #define __CM0_CMSIS_VERSION       ((__CM0_CMSIS_VERSION_MAIN << 16U) | \
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 19
-
-
   69:Drivers/CMSIS/Include/core_cm0.h ****                                     __CM0_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL
   70:Drivers/CMSIS/Include/core_cm0.h **** 
   71:Drivers/CMSIS/Include/core_cm0.h **** #define __CORTEX_M                (0U)                                   /*!< Cortex-M Core */
@@ -1137,10 +1138,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  122:Drivers/CMSIS/Include/core_cm0.h **** #endif /* __CORE_CM0_H_GENERIC */
  123:Drivers/CMSIS/Include/core_cm0.h **** 
  124:Drivers/CMSIS/Include/core_cm0.h **** #ifndef __CMSIS_GENERIC
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 20
+
+
  125:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 20
-
-
  126:Drivers/CMSIS/Include/core_cm0.h **** #ifndef __CORE_CM0_H_DEPENDANT
  127:Drivers/CMSIS/Include/core_cm0.h **** #define __CORE_CM0_H_DEPENDANT
  128:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1197,10 +1198,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  179:Drivers/CMSIS/Include/core_cm0.h ****   - Core Register
  180:Drivers/CMSIS/Include/core_cm0.h ****   - Core NVIC Register
  181:Drivers/CMSIS/Include/core_cm0.h ****   - Core SCB Register
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 21
+
+
  182:Drivers/CMSIS/Include/core_cm0.h ****   - Core SysTick Register
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 21
-
-
  183:Drivers/CMSIS/Include/core_cm0.h ****  ******************************************************************************/
  184:Drivers/CMSIS/Include/core_cm0.h **** /**
  185:Drivers/CMSIS/Include/core_cm0.h ****   \defgroup CMSIS_core_register Defines and Type Definitions
@@ -1257,10 +1258,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  236:Drivers/CMSIS/Include/core_cm0.h ****   uint32_t w;                            /*!< Type      used for word access */
  237:Drivers/CMSIS/Include/core_cm0.h **** } IPSR_Type;
  238:Drivers/CMSIS/Include/core_cm0.h **** 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 22
+
+
  239:Drivers/CMSIS/Include/core_cm0.h **** /* IPSR Register Definitions */
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 22
-
-
  240:Drivers/CMSIS/Include/core_cm0.h **** #define IPSR_ISR_Pos                        0U                                            /*!< IPSR
  241:Drivers/CMSIS/Include/core_cm0.h **** #define IPSR_ISR_Msk                       (0x1FFUL /*<< IPSR_ISR_Pos*/)                  /*!< IPSR
  242:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1317,10 +1318,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  293:Drivers/CMSIS/Include/core_cm0.h ****   } b;                                   /*!< Structure used for bit  access */
  294:Drivers/CMSIS/Include/core_cm0.h ****   uint32_t w;                            /*!< Type      used for word access */
  295:Drivers/CMSIS/Include/core_cm0.h **** } CONTROL_Type;
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 23
+
+
  296:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 23
-
-
  297:Drivers/CMSIS/Include/core_cm0.h **** /* CONTROL Register Definitions */
  298:Drivers/CMSIS/Include/core_cm0.h **** #define CONTROL_SPSEL_Pos                   1U                                            /*!< CONT
  299:Drivers/CMSIS/Include/core_cm0.h **** #define CONTROL_SPSEL_Msk                  (1UL << CONTROL_SPSEL_Pos)                     /*!< CONT
@@ -1377,10 +1378,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  350:Drivers/CMSIS/Include/core_cm0.h ****   __IOM uint32_t SHP[2U];                /*!< Offset: 0x01C (R/W)  System Handlers Priority Registe
  351:Drivers/CMSIS/Include/core_cm0.h ****   __IOM uint32_t SHCSR;                  /*!< Offset: 0x024 (R/W)  System Handler Control and State
  352:Drivers/CMSIS/Include/core_cm0.h **** } SCB_Type;
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 24
+
+
  353:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 24
-
-
  354:Drivers/CMSIS/Include/core_cm0.h **** /* SCB CPUID Register Definitions */
  355:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_CPUID_IMPLEMENTER_Pos          24U                                            /*!< SCB 
  356:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_CPUID_IMPLEMENTER_Msk          (0xFFUL << SCB_CPUID_IMPLEMENTER_Pos)          /*!< SCB 
@@ -1437,10 +1438,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  407:Drivers/CMSIS/Include/core_cm0.h **** 
  408:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_SYSRESETREQ_Pos           2U                                            /*!< SCB 
  409:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_SYSRESETREQ_Msk          (1UL << SCB_AIRCR_SYSRESETREQ_Pos)             /*!< SCB 
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 25
+
+
  410:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 25
-
-
  411:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_VECTCLRACTIVE_Pos         1U                                            /*!< SCB 
  412:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_AIRCR_VECTCLRACTIVE_Msk        (1UL << SCB_AIRCR_VECTCLRACTIVE_Pos)           /*!< SCB 
  413:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1497,10 +1498,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  464:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_TICKINT_Msk           (1UL << SysTick_CTRL_TICKINT_Pos)              /*!< SysT
  465:Drivers/CMSIS/Include/core_cm0.h **** 
  466:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_ENABLE_Pos             0U                                            /*!< SysT
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 26
+
+
  467:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_CTRL_ENABLE_Msk            (1UL /*<< SysTick_CTRL_ENABLE_Pos*/)           /*!< SysT
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 26
-
-
  468:Drivers/CMSIS/Include/core_cm0.h **** 
  469:Drivers/CMSIS/Include/core_cm0.h **** /* SysTick Reload Register Definitions */
  470:Drivers/CMSIS/Include/core_cm0.h **** #define SysTick_LOAD_RELOAD_Pos             0U                                            /*!< SysT
@@ -1557,10 +1558,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  521:Drivers/CMSIS/Include/core_cm0.h **** #define _FLD2VAL(field, value)    (((uint32_t)(value) & field ## _Msk) >> field ## _Pos)
  522:Drivers/CMSIS/Include/core_cm0.h **** 
  523:Drivers/CMSIS/Include/core_cm0.h **** /*@} end of group CMSIS_core_bitfield */
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 27
+
+
  524:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 27
-
-
  525:Drivers/CMSIS/Include/core_cm0.h **** 
  526:Drivers/CMSIS/Include/core_cm0.h **** /**
  527:Drivers/CMSIS/Include/core_cm0.h ****   \ingroup    CMSIS_core_register
@@ -1617,10 +1618,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  578:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_GetEnableIRQ           __NVIC_GetEnableIRQ
  579:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_DisableIRQ             __NVIC_DisableIRQ
  580:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_GetPendingIRQ          __NVIC_GetPendingIRQ
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 28
+
+
  581:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_SetPendingIRQ          __NVIC_SetPendingIRQ
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 28
-
-
  582:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_ClearPendingIRQ        __NVIC_ClearPendingIRQ
  583:Drivers/CMSIS/Include/core_cm0.h **** /*#define NVIC_GetActive              __NVIC_GetActive             not available for Cortex-M0 */
  584:Drivers/CMSIS/Include/core_cm0.h ****   #define NVIC_SetPriority            __NVIC_SetPriority
@@ -1663,28 +1664,28 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  621:Drivers/CMSIS/Include/core_cm0.h ****   \note    IRQn must not be negative.
  622:Drivers/CMSIS/Include/core_cm0.h ****  */
  623:Drivers/CMSIS/Include/core_cm0.h **** __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
- 559              		.loc 2 623 22 view .LVU174
- 560              	.LBB13:
+ 560              		.loc 2 623 22 view .LVU174
+ 561              	.LBB13:
  624:Drivers/CMSIS/Include/core_cm0.h **** {
  625:Drivers/CMSIS/Include/core_cm0.h ****   if ((int32_t)(IRQn) >= 0)
- 561              		.loc 2 625 3 view .LVU175
+ 562              		.loc 2 625 3 view .LVU175
  626:Drivers/CMSIS/Include/core_cm0.h ****   {
  627:Drivers/CMSIS/Include/core_cm0.h ****     NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
- 562              		.loc 2 627 5 view .LVU176
- 563              		.loc 2 627 20 is_stmt 0 view .LVU177
- 564 016e 114A     		ldr	r2, .L15+44
- 565 0170 1160     		str	r1, [r2]
- 566              	.LVL18:
- 567              		.loc 2 627 20 view .LVU178
- 568              	.LBE13:
- 569              	.LBE12:
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 29
+ 563              		.loc 2 627 5 view .LVU176
+ 564              		.loc 2 627 20 is_stmt 0 view .LVU177
+ 565 0170 114A     		ldr	r2, .L15+48
+ 566 0172 1160     		str	r1, [r2]
+ 567              	.LVL18:
+ 568              		.loc 2 627 20 view .LVU178
+ 569              	.LBE13:
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 29
 
 
+ 570              	.LBE12:
  164:Src/main.c    **** 	
- 570              		.loc 1 164 2 is_stmt 1 view .LVU179
- 571              	.LBB14:
- 572              	.LBI14:
+ 571              		.loc 1 164 2 is_stmt 1 view .LVU179
+ 572              	.LBB14:
+ 573              	.LBI14:
  628:Drivers/CMSIS/Include/core_cm0.h ****   }
  629:Drivers/CMSIS/Include/core_cm0.h **** }
  630:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -1737,10 +1738,10 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  677:Drivers/CMSIS/Include/core_cm0.h ****  */
  678:Drivers/CMSIS/Include/core_cm0.h **** __STATIC_INLINE uint32_t __NVIC_GetPendingIRQ(IRQn_Type IRQn)
  679:Drivers/CMSIS/Include/core_cm0.h **** {
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 30
+
+
  680:Drivers/CMSIS/Include/core_cm0.h ****   if ((int32_t)(IRQn) >= 0)
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 30
-
-
  681:Drivers/CMSIS/Include/core_cm0.h ****   {
  682:Drivers/CMSIS/Include/core_cm0.h ****     return((uint32_t)(((NVIC->ISPR[0U] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL)
  683:Drivers/CMSIS/Include/core_cm0.h ****   }
@@ -1791,87 +1792,88 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 1
  728:Drivers/CMSIS/Include/core_cm0.h ****   \note    The priority cannot be set for every processor exception.
  729:Drivers/CMSIS/Include/core_cm0.h ****  */
  730:Drivers/CMSIS/Include/core_cm0.h **** __STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
- 573              		.loc 2 730 22 view .LVU180
- 574              	.LBB15:
+ 574              		.loc 2 730 22 view .LVU180
+ 575              	.LBB15:
  731:Drivers/CMSIS/Include/core_cm0.h **** {
  732:Drivers/CMSIS/Include/core_cm0.h ****   if ((int32_t)(IRQn) >= 0)
- 575              		.loc 2 732 3 view .LVU181
+ 576              		.loc 2 732 3 view .LVU181
  733:Drivers/CMSIS/Include/core_cm0.h ****   {
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 31
+
+
  734:Drivers/CMSIS/Include/core_cm0.h ****     NVIC->IP[_IP_IDX(IRQn)]  = ((uint32_t)(NVIC->IP[_IP_IDX(IRQn)]  & ~(0xFFUL << _BIT_SHIFT(IRQn))
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 31
-
-
- 576              		.loc 2 734 5 view .LVU182
- 577              		.loc 2 734 52 is_stmt 0 view .LVU183
- 578 0172 C320     		movs	r0, #195
- 579 0174 8000     		lsls	r0, r0, #2
- 580 0176 1358     		ldr	r3, [r2, r0]
- 581              		.loc 2 734 33 view .LVU184
- 582 0178 1B02     		lsls	r3, r3, #8
- 583 017a 1B0A     		lsrs	r3, r3, #8
- 584              		.loc 2 734 102 view .LVU185
- 585 017c 8021     		movs	r1, #128
- 586 017e 0906     		lsls	r1, r1, #24
- 587 0180 0B43     		orrs	r3, r1
- 588              		.loc 2 734 30 view .LVU186
- 589 0182 1350     		str	r3, [r2, r0]
- 590              	.LVL19:
- 591              	.L14:
- 592              		.loc 2 734 30 view .LVU187
- 593              	.LBE15:
- 594              	.LBE14:
+ 577              		.loc 2 734 5 view .LVU182
+ 578              		.loc 2 734 52 is_stmt 0 view .LVU183
+ 579 0174 C320     		movs	r0, #195
+ 580 0176 8000     		lsls	r0, r0, #2
+ 581 0178 1358     		ldr	r3, [r2, r0]
+ 582              		.loc 2 734 33 view .LVU184
+ 583 017a 1B02     		lsls	r3, r3, #8
+ 584 017c 1B0A     		lsrs	r3, r3, #8
+ 585              		.loc 2 734 102 view .LVU185
+ 586 017e 8021     		movs	r1, #128
+ 587 0180 0906     		lsls	r1, r1, #24
+ 588 0182 0B43     		orrs	r3, r1
+ 589              		.loc 2 734 30 view .LVU186
+ 590 0184 1350     		str	r3, [r2, r0]
+ 591              	.LVL19:
+ 592              	.L14:
+ 593              		.loc 2 734 30 view .LVU187
+ 594              	.LBE15:
+ 595              	.LBE14:
  167:Src/main.c    **** 	}
- 595              		.loc 1 167 2 is_stmt 1 view .LVU188
+ 596              		.loc 1 167 2 is_stmt 1 view .LVU188
  168:Src/main.c    **** }
- 596              		.loc 1 168 2 view .LVU189
+ 597              		.loc 1 168 2 view .LVU189
  167:Src/main.c    **** 	}
- 597              		.loc 1 167 8 view .LVU190
- 598 0184 FEE7     		b	.L14
- 599              	.L16:
- 600 0186 C046     		.align	2
- 601              	.L15:
- 602 0188 00100240 		.word	1073876992
- 603 018c 00080048 		.word	1207961600
- 604 0190 3F1F0000 		.word	7999
- 605 0194 00040040 		.word	1073742848
- 606 0198 10270000 		.word	10000
- 607 019c FFFEFFFF 		.word	-257
- 608 01a0 FFFDFFFF 		.word	-513
- 609 01a4 FFEFFFFF 		.word	-4097
- 610 01a8 FFDFFFFF 		.word	-8193
- 611 01ac FFBFFFFF 		.word	-16385
- 612 01b0 FF7FFFFF 		.word	-32769
- 613 01b4 00E100E0 		.word	-536813312
- 614              		.cfi_endproc
- 615              	.LFE40:
- 617              		.text
- 618              	.Letext0:
- 619              		.file 3 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
- 620              		.file 4 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
- 621              		.file 5 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
- 622              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
- 623              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
- 624              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
- 625              		.file 9 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
- 626              		.file 10 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
- 627              		.file 11 "<built-in>"
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s 			page 32
+ 598              		.loc 1 167 8 view .LVU190
+ 599 0186 FEE7     		b	.L14
+ 600              	.L16:
+ 601              		.align	2
+ 602              	.L15:
+ 603 0188 00100240 		.word	1073876992
+ 604 018c 00080048 		.word	1207961600
+ 605 0190 3F1F0000 		.word	7999
+ 606 0194 00040040 		.word	1073742848
+ 607 0198 10270000 		.word	10000
+ 608 019c FFFEFFFF 		.word	-257
+ 609 01a0 FFFDFFFF 		.word	-513
+ 610 01a4 FFEFFFFF 		.word	-4097
+ 611 01a8 FFDFFFFF 		.word	-8193
+ 612 01ac FFBFFFFF 		.word	-16385
+ 613 01b0 B80B0000 		.word	3000
+ 614 01b4 FF7FFFFF 		.word	-32769
+ 615 01b8 00E100E0 		.word	-536813312
+ 616              		.cfi_endproc
+ 617              	.LFE40:
+ 619              		.text
+ 620              	.Letext0:
+ 621              		.file 3 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
+ 622              		.file 4 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+ 623              		.file 5 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
+ 624              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
+ 625              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
+ 626              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
+ 627              		.file 9 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
+ 628              		.file 10 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
+ 629              		.file 11 "<built-in>"
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s 			page 32
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:19     .text.TIM2_IRQHandler:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:25     .text.TIM2_IRQHandler:00000000 TIM2_IRQHandler
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:64     .text.TIM2_IRQHandler:00000028 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:69     .text._Error_Handler:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:75     .text._Error_Handler:00000000 _Error_Handler
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:93     .rodata.SystemClock_Config.str1.4:00000000 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:98     .text.SystemClock_Config:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:104    .text.SystemClock_Config:00000000 SystemClock_Config
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:207    .text.SystemClock_Config:0000006c $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:212    .text.main:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:218    .text.main:00000000 main
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cc0Zyz8a.s:602    .text.main:00000188 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:19     .text.TIM2_IRQHandler:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:25     .text.TIM2_IRQHandler:00000000 TIM2_IRQHandler
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:64     .text.TIM2_IRQHandler:00000028 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:69     .text._Error_Handler:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:75     .text._Error_Handler:00000000 _Error_Handler
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:93     .rodata.SystemClock_Config.str1.4:00000000 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:98     .text.SystemClock_Config:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:104    .text.SystemClock_Config:00000000 SystemClock_Config
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:207    .text.SystemClock_Config:0000006c $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:212    .text.main:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:218    .text.main:00000000 main
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//cceJJK18.s:603    .text.main:00000188 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_TogglePin
