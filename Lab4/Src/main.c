@@ -43,6 +43,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f0xx_hal.h"
+#include "stm32f072xb.h"
 void _Error_Handler(char * file, int line);
 
 /* USER CODE BEGIN Includes */
@@ -58,7 +59,8 @@ void _Error_Handler(char * file, int line);
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void TIM2_IRQHandler(void);
+void transmitCharacter(char);
+void transmitString(char*);
 // void TIM3_IRQHandler(void);
 
 /* USER CODE BEGIN PFP */
@@ -80,103 +82,82 @@ int main(void)
 	SystemClock_Config(); //Configure the system clock
 
 	__HAL_RCC_GPIOC_CLK_ENABLE(); // Enable the GPIOC clock in the RCC
-	//RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-	__HAL_RCC_TIM2_CLK_ENABLE(); // Enable timer 2 peripheral
-  __HAL_RCC_TIM3_CLK_ENABLE(); // Enable timer 3 peripheral
 	// Set up a configuration struct to pass to the initialization function
-	GPIO_InitTypeDef initStr = {GPIO_PIN_6 | GPIO_PIN_7| GPIO_PIN_8 | GPIO_PIN_9,
+	GPIO_InitTypeDef initStr = {GPIO_PIN_4| GPIO_PIN_5| GPIO_PIN_6 | GPIO_PIN_7| GPIO_PIN_8 | GPIO_PIN_9,
 	GPIO_MODE_OUTPUT_PP,
 	GPIO_SPEED_FREQ_LOW,
 	GPIO_NOPULL};
 	HAL_GPIO_Init(GPIOC, &initStr); // Initialize pins PC6,7,8 & PC9
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Start PC8 high (orange)
 
-	// *********** Setting parameters *********** //
-	uint32_t timer_freq = 8000000;
-	uint32_t target_freq_tim2 = 4; //target frequency for timer 2
-  uint32_t target_freq_tim3 = 800; //target frequency for timer 3
-	uint32_t psc = 7999;
-	//Set psc and arr for TIM2
-	TIM2->PSC = 7999;
-	TIM2->ARR = 250;
-  //Set psc and arr for TIM3
-  // TIM3->PSC = 7;
-	TIM3->ARR = 10000;
-	// enable update interrupt ONLY for TIM2
-	TIM2->DIER |= TIM_DIER_UIE;
-	// configure and enable/start timers
-	TIM2->CR1 |= (1 << 0);
-
-  // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
-  // 1) For CC1S and CC2S, set channels to output -- 00: CC1/2 channel is configured as output
-  TIM3->CCMR1 &= ~(1 << 0); 
-  TIM3->CCMR1 &= ~(1 << 1);
-  TIM3->CCMR1 &= ~(1 << 8); 
-  TIM3->CCMR1 &= ~(1 << 9); 
-  // 2) OC1M -> Set Output Channel 1 to PWM Mode 2
-  TIM3->CCMR1 &= ~(1 << 4); // clear bit 4
-  TIM3->CCMR1 &= ~(1 << 5); // clear bit 5
-  TIM3->CCMR1 &= ~(1 << 6); // clear bit 6
-  // 111: PWM mode 2 (bits 4-6)
-  TIM3->CCMR1 |=(1 << 4); 
-  TIM3->CCMR1 |=(1 << 5); 
-  TIM3->CCMR1 |=(1 << 6); 
-  // OC2M -> Set Output Channel 2 to PWM Mode 2
-  TIM3->CCMR1 &= ~(1 << 12); // clear bit 12
-  TIM3->CCMR1 &= ~(1 << 13); // clear bit 13
-  TIM3->CCMR1 &= ~(1 << 14); // clear bit 14
-  // 111: PWM mode 2 (bits 12-14)
-  TIM3->CCMR1 |= (1 << 12); 
-  TIM3->CCMR1 |= (1 << 13); 
-  TIM3->CCMR1 |= (1 << 14); 
-  // 3) Enable output compare preload for both channels (TIM_CCMR1_OC1PE) for Channel 1 (TIM_CCMR1_OC1PE) for Channel 2
-  TIM3->CCMR1 |= (1 << 3);
-  TIM3->CCMR1 |= (1 << 11);
-  // 4) Set the output enable bits for channels 1 & 2 in the CCER register
-  TIM3->CCER |= (1 << 0); // channel 1 (bit 0)
-  TIM3->CCER |= (1 << 4); // channel 2 (bit 4)
-  // 5) Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value
-	TIM3->CCR1 = 2000; //change this to see rate changes on Analog Discovery 2
-  TIM3->CCR2 = 3000; //change this to see rate changes on Analog Discovery 2
-  // Enable Timer 3
-  TIM3->CR1 |= (1 << 0);
-  // *********** — Configuring Timer 3 Channels to PWM Mode - *********** //
-
   // **** Alternate Function **** //
-  //PC6 = TIM3_CH1 (AF0)
-  //PC7 = TIM3_CH2 (AF0)
-  // Clear Red MODER6 and then set to alternate (10)
-  GPIOC->MODER &= ~(1<< 12); //clear bits
-  GPIOC->MODER &= ~(1<< 13); //clear bits
-  GPIOC->MODER |= (1<< 13); // set to alternate
-  // Clear Blue MODER7 and then set to alternate (10)
-  GPIOC->MODER &= ~(1<< 14); //clear bit
-  GPIOC->MODER &= ~(1<< 15); //clear bit
-  GPIOC->MODER |= (1<< 15); //set to alternate
-  // Assign AF0 to PC6 and PC7
-  // For AF0, you simply ensure the AF register bits for PC6 and PC7 are cleared
-  GPIOC->AFR[0] |= (0 << GPIO_AFRL_AFRL0_Pos); // Clear AF0 register (0000)
+  // Set the selected pins into alternate function mode and program the correct alternate function number into the GPIO AFR registers
+  //PC4 = USART3_TX (AF1) -- transmitting
+  //PC5 = USART3_RX (AF1) -- receiving
+  // Clear PC4/5 MODER4/5 and then set to alternate (10)
+  GPIOC->MODER &= ~(1<<8); // clear PC4 bit
+  GPIOC->MODER &= ~(1<<9); // clear PC4 bit
+  GPIOC->MODER |= (1<<9); // set to alternate (10)
+  GPIOC->MODER &= ~(1<<10); // clear PC5 bit
+  GPIOC->MODER &= ~(1<<11); // clear PC5 bit
+  GPIOC->MODER |= (1<<11); // set to alternate (10)
+  // Assign AF1 to PC4 and PC5 -- 0001
+  GPIOC->AFR[0] |= (1 << 16); //AFSEL4 bit 16
+  GPIOC->AFR[0] &= ~(1 << 17); //AFSEL4 bit 17 (clear)
+  GPIOC->AFR[0] &= ~(1 << 18); //AFSEL4 bit 18 (clear)
+  GPIOC->AFR[0] &= ~(1 << 19); //AFSEL4 bit 19 (clear)
+  GPIOC->AFR[0] |= (1 << 20); //AFSEL5 bit 20
+  GPIOC->AFR[0] &= ~(1 << 21); //AFSEL5 bit 21 (clear)
+  GPIOC->AFR[0] &= ~(1 << 22); //AFSEL5 bit 22 (clear)
+  GPIOC->AFR[0] &= ~(1 << 23); //AFSEL5 bit 23 (clear)
 
-	//*****Enable and Set Priority of the TIM2 Interrupt*****************//
-	//Enable the selected EXTI interrupt that references timer 2
-	NVIC_EnableIRQ(TIM2_IRQn);
-	//Set the priority for the interrupt to 2
-	NVIC_SetPriority(TIM2_IRQn, 2);
-	
-	
+  // **** Initialize the USART **** //
+  // Enable the USART clock in the RCC
+  RCC->APB1ENR = RCC_APB1ENR_USART3EN;
+  // Set the Baud rate for communication to be 115200 bits/second.
+  USART3->BRR = HAL_RCC_GetHCLKFreq() / 115200; 
+  // Enable transmitter and receiver hardware
+  USART3->CR1 |= (1 << 3); // Enable transmitter
+  USART3->CR1 |= (1 << 2); // Enable receiver
+  USART3->CR1 |= (1 << 0); // Enable USART
+  // **** Initialize the USART **** //
+
 	while (1) {
+    // Check and wait on the USART status flag that indicates the receive (read) register is not empty
+    while (!(USART1->ISR & USART_ISR_RXNE)){}
+    // LED to check: red (114)
+    // Read the received character
+    uint8_t received_char = USART3->RDR;
+    switch (received_char) {
+      case 'r':
+        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+      case 'b':
+        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
+    default:
+      break;
+    }
 	}
 }
 
 /**
-* TIM2 Interrupt Handler
+*  Transmits a single character on the USART
 */
-void TIM2_IRQHandler(){
-	//toggle green and orange
-	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8); 
-  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9); 
-	// clear pending register
-	TIM2->SR &= ~(TIM_SR_UIF);
+void transmitCharacter(char c){
+  // Check and wait on the USART status flag that indicates the transmit register is empty
+  while(!(USART3->ISR & USART_ISR_TXE)){
+
+  }
+  // Write the character into the transmit data register
+  USART3->TDR = c;
+}
+
+/**
+*  Transmits a string on the USART
+*/
+void transmitString(char* s){
+  for (int i = 0; s[i] != '\0'; i++){
+    transmitCharacter(s[i]);
+  }
 }
 
 /** System Clock Configuration
