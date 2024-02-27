@@ -45,8 +45,9 @@
 #include "stm32f0xx_hal.h"
 #include "stm32f072xb.h"
 void _Error_Handler(char *file, int line);
-char receivedChar; // global variable holding the received characters
+volatile uint8_t receivedChar; // global variable holding the received characters
 volatile int newData = 0;
+volatile int count = 0; // count of characters (after 2 we will reset this variable)
 
 /* USER CODE BEGIN Includes */
 
@@ -116,7 +117,7 @@ int main(void)
   // **** Initialize the USART **** //
   // Enable the USART clock in the RCC
   RCC->APB1ENR = RCC_APB1ENR_USART3EN;
-  // Set the Baud rate for communication to be 115200 bits/second.
+  // Set the Baud rate for communication to be 9600 bits/second.
   USART3->BRR = HAL_RCC_GetHCLKFreq() / 9600;
   // Enable transmitter and receiver hardware
   USART3->CR1 |= (1 << 3); // Enable transmitter
@@ -124,14 +125,77 @@ int main(void)
   USART3->CR1 |= (1 << 5); // Enable RXNE interrupt
   USART3->CR1 |= (1 << 0); // Enable USART
   // **** Initialize the USART **** //
+
   //*****Enable and Set Priority of the USART3 Interrupt*****************//
   // Enable the selected EXTI interrupt that references USART3
   NVIC_EnableIRQ(USART3_4_IRQn);
   // Set the priority for the interrupt to 0
   NVIC_SetPriority(USART3_4_IRQn, 0);
-  transmitString("CMD? \0");
+  // transmitString("CMD? \0");
+
   while (1)
   {
+    while (!(USART3->ISR & USART_ISR_RXNE)){}
+    // ******** 4.2 General Configuration ******** //
+    if ((newData == 1))
+    {
+      uint16_t LED_case = 0; // LED to update
+      switch (receivedChar)
+      {
+      case 'r':
+        LED_case = GPIO_PIN_6;
+        transmitCharacter('r');
+        break;
+      case 'b':
+        LED_case = GPIO_PIN_7;
+        transmitCharacter('b');
+        break;
+      case 'o':
+        LED_case = GPIO_PIN_8;
+        transmitCharacter('o');
+        break;
+      case 'g':
+        LED_case = GPIO_PIN_9;
+        transmitCharacter('g');
+        break;
+      case '0':
+        HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_RESET);
+        transmitCharacter('0');
+        break;
+      case '1':
+        HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_SET);
+        transmitCharacter('1');
+        break;
+      case '2':
+        HAL_GPIO_TogglePin(GPIOC, LED_case);
+        transmitCharacter('2');
+      default:
+        transmitString("Error: Input needs to be 2 characters with correct criteria of r,b,o,g and 0-2\0");
+        break;
+      }
+      newData = 0;
+      count++;
+      if (count >= 2)
+        count = 0;
+    }
+
+
+    // ******** 4.2 General Configuration ******** //
+    // uint8_t received_char = USART3->RDR;
+    // switch (received_char)
+    // {
+    // case 'r':
+    //   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+    //   transmitCharacter('r');
+    //   break;
+    // default:
+    //   break;
+    // }
+    // transmitString(receivedChar);
+
+
+
+
   }
 }
 
@@ -140,46 +204,9 @@ int main(void)
  */
 void USART3_IRQHandler()
 {
-  receivedChar = (char)(USART3->RDR & 0xFF); // set global variable and mask it to only 2 characters
-  newData = 1;                               // Indicate new data is ready to be processed
-  while (!(USART3->ISR & USART_ISR_RXNE))
-  {
-    uint16_t LED_case = 0; // LED to update
-    if ((newData))
-    { // Check if a complete command is received
-      switch (receivedChar)
-      {
-      case 'r':
-        transmitString("Red LED");
-        LED_case = GPIO_PIN_6;
-        break;
-      case 'b':
-        transmitString("Blue LED");
-        LED_case = GPIO_PIN_7;
-        break;
-      case 'o':
-        transmitString("Orange LED");
-        LED_case = GPIO_PIN_8;
-        break;
-      case 'g':
-        LED_case = GPIO_PIN_9;
-        break;
-      case '0':
-        HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_RESET);
-        transmitString("Green LED");
-        break;
-      case '1':
-        HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_SET);
-        break;
-      case '2':
-        HAL_GPIO_TogglePin(GPIOC, LED_case);
-      default:
-        transmitString("Error: Input needs to be 2 characters with correct criteria of r,b,o,g and 0-2\0");
-        break;
-      }
-      newData = 0;
-    }
-  }
+  // receivedChar = (char)(USART3->RDR & 0xFF); // set global variable and mask it to only 2 characters
+  receivedChar = USART3->RDR;
+  newData = 1;                  // Indicate new data is ready to be processed
 }
 
 /**
