@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
   30:Src/main.c    ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   31:Src/main.c    ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   32:Src/main.c    ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 2
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 2
 
 
   33:Src/main.c    ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
   87:Src/main.c    **** 	GPIO_MODE_OUTPUT_PP,
   88:Src/main.c    **** 	GPIO_SPEED_FREQ_LOW,
   89:Src/main.c    **** 	GPIO_NOPULL};
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 3
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 3
 
 
   90:Src/main.c    **** 	HAL_GPIO_Init(GPIOC, &initStr); // Initialize pins PC6,7,8 & PC9
@@ -149,7 +149,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  115:Src/main.c    ****   // Enable the USART clock in the RCC
  116:Src/main.c    ****   RCC->APB1ENR = RCC_APB1ENR_USART3EN;
  117:Src/main.c    ****   // Set the Baud rate for communication to be 115200 bits/second.
- 118:Src/main.c    ****   USART3->BRR = HAL_RCC_GetHCLKFreq() / 115200; 
+ 118:Src/main.c    ****   USART3->BRR = HAL_RCC_GetHCLKFreq() / 9600; 
  119:Src/main.c    ****   // Enable transmitter and receiver hardware
  120:Src/main.c    ****   USART3->CR1 |= (1 << 3); // Enable transmitter
  121:Src/main.c    ****   USART3->CR1 |= (1 << 2); // Enable receiver
@@ -158,16 +158,16 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  124:Src/main.c    **** 
  125:Src/main.c    **** 	while (1) {
  126:Src/main.c    ****     // Check and wait on the USART status flag that indicates the receive (read) register is not em
- 127:Src/main.c    ****     while (!(USART1->ISR & USART_ISR_RXNE)){}
+ 127:Src/main.c    ****     while (!(USART3->ISR & USART_ISR_RXNE)){}
  128:Src/main.c    ****     // LED to check: red (114)
  129:Src/main.c    ****     // Read the received character
  130:Src/main.c    ****     uint8_t received_char = USART3->RDR;
  131:Src/main.c    ****     switch (received_char) {
  132:Src/main.c    ****       case 'r':
  133:Src/main.c    ****         HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
- 134:Src/main.c    ****       case 'b':
- 135:Src/main.c    ****         HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
- 136:Src/main.c    ****     default:
+ 134:Src/main.c    ****         break;
+ 135:Src/main.c    ****     default:
+ 136:Src/main.c    ****         printf("Error, invalid LED");
  137:Src/main.c    ****       break;
  138:Src/main.c    ****     }
  139:Src/main.c    **** 	}
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  144:Src/main.c    **** */
  145:Src/main.c    **** void transmitCharacter(char c){
   27              		.loc 1 145 31 view -0
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 4
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 4
 
 
   28              		.cfi_startproc
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
   69              		@ frame_needed = 0, uses_anonymous_args = 0
   70              		.loc 1 157 29 is_stmt 0 view .LVU9
   71 0000 70B5     		push	{r4, r5, r6, lr}
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 5
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 5
 
 
   72              	.LCFI0:
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  120              	.LFB44:
  162:Src/main.c    **** 
  163:Src/main.c    **** /** System Clock Configuration
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 6
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 6
 
 
  164:Src/main.c    **** */
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  121              		.loc 1 217 1 is_stmt 1 view -0
  122              		.cfi_startproc
  123              		@ Volatile: function does not return.
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 7
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 7
 
 
  124              		@ args = 0, pretend = 0, frame = 0
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  174:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
  167              		.loc 1 174 3 is_stmt 1 view .LVU30
  174:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = 16;
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 8
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 8
 
 
  168              		.loc 1 174 30 is_stmt 0 view .LVU31
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  205 002e FFF7FEFF 		bl	HAL_RCC_ClockConfig
  206              	.LVL10:
  190:Src/main.c    ****   {
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 9
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 9
 
 
  207              		.loc 1 190 6 discriminator 1 view .LVU49
@@ -536,396 +536,411 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 1
  251 006c 00000000 		.word	.LC0
  252              		.cfi_endproc
  253              	.LFE43:
- 255              		.section	.text.main,"ax",%progbits
- 256              		.align	1
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 10
+ 255              		.section	.rodata.main.str1.4,"aMS",%progbits,1
+ 256              		.align	2
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 10
 
 
- 257              		.global	main
- 258              		.syntax unified
- 259              		.code	16
- 260              		.thumb_func
- 262              	main:
- 263              	.LFB40:
+ 257              	.LC2:
+ 258 0000 4572726F 		.ascii	"Error, invalid LED\000"
+ 258      722C2069 
+ 258      6E76616C 
+ 258      6964204C 
+ 258      454400
+ 259              		.section	.text.main,"ax",%progbits
+ 260              		.align	1
+ 261              		.global	main
+ 262              		.syntax unified
+ 263              		.code	16
+ 264              		.thumb_func
+ 266              	main:
+ 267              	.LFB40:
   80:Src/main.c    **** 	HAL_Init(); // Reset of all peripherals, init the Flash and Systick
- 264              		.loc 1 80 1 view -0
- 265              		.cfi_startproc
- 266              		@ args = 0, pretend = 0, frame = 24
- 267              		@ frame_needed = 0, uses_anonymous_args = 0
- 268 0000 70B5     		push	{r4, r5, r6, lr}
- 269              	.LCFI3:
- 270              		.cfi_def_cfa_offset 16
- 271              		.cfi_offset 4, -16
- 272              		.cfi_offset 5, -12
- 273              		.cfi_offset 6, -8
- 274              		.cfi_offset 14, -4
- 275 0002 86B0     		sub	sp, sp, #24
- 276              	.LCFI4:
- 277              		.cfi_def_cfa_offset 40
+ 268              		.loc 1 80 1 view -0
+ 269              		.cfi_startproc
+ 270              		@ args = 0, pretend = 0, frame = 24
+ 271              		@ frame_needed = 0, uses_anonymous_args = 0
+ 272 0000 70B5     		push	{r4, r5, r6, lr}
+ 273              	.LCFI3:
+ 274              		.cfi_def_cfa_offset 16
+ 275              		.cfi_offset 4, -16
+ 276              		.cfi_offset 5, -12
+ 277              		.cfi_offset 6, -8
+ 278              		.cfi_offset 14, -4
+ 279 0002 86B0     		sub	sp, sp, #24
+ 280              	.LCFI4:
+ 281              		.cfi_def_cfa_offset 40
   81:Src/main.c    **** 	SystemClock_Config(); //Configure the system clock
- 278              		.loc 1 81 2 view .LVU59
- 279 0004 FFF7FEFF 		bl	HAL_Init
- 280              	.LVL18:
+ 282              		.loc 1 81 2 view .LVU59
+ 283 0004 FFF7FEFF 		bl	HAL_Init
+ 284              	.LVL18:
   82:Src/main.c    **** 
- 281              		.loc 1 82 2 view .LVU60
- 282 0008 FFF7FEFF 		bl	SystemClock_Config
- 283              	.LVL19:
+ 285              		.loc 1 82 2 view .LVU60
+ 286 0008 FFF7FEFF 		bl	SystemClock_Config
+ 287              	.LVL19:
   84:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
- 284              		.loc 1 84 2 view .LVU61
- 285              	.LBB3:
+ 288              		.loc 1 84 2 view .LVU61
+ 289              	.LBB3:
   84:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
- 286              		.loc 1 84 2 view .LVU62
+ 290              		.loc 1 84 2 view .LVU62
   84:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
- 287              		.loc 1 84 2 view .LVU63
- 288 000c 3F4D     		ldr	r5, .L25
- 289 000e 6B69     		ldr	r3, [r5, #20]
- 290 0010 8022     		movs	r2, #128
- 291 0012 1203     		lsls	r2, r2, #12
- 292 0014 1343     		orrs	r3, r2
- 293 0016 6B61     		str	r3, [r5, #20]
+ 291              		.loc 1 84 2 view .LVU63
+ 292 000c 3E4D     		ldr	r5, .L25
+ 293 000e 6B69     		ldr	r3, [r5, #20]
+ 294 0010 8022     		movs	r2, #128
+ 295 0012 1203     		lsls	r2, r2, #12
+ 296 0014 1343     		orrs	r3, r2
+ 297 0016 6B61     		str	r3, [r5, #20]
   84:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
- 294              		.loc 1 84 2 view .LVU64
- 295 0018 6B69     		ldr	r3, [r5, #20]
- 296 001a 1340     		ands	r3, r2
- 297 001c 0093     		str	r3, [sp]
+ 298              		.loc 1 84 2 view .LVU64
+ 299 0018 6B69     		ldr	r3, [r5, #20]
+ 300 001a 1340     		ands	r3, r2
+ 301 001c 0093     		str	r3, [sp]
   84:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
- 298              		.loc 1 84 2 view .LVU65
- 299 001e 009B     		ldr	r3, [sp]
- 300              	.LBE3:
-  84:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
- 301              		.loc 1 84 2 view .LVU66
-  86:Src/main.c    **** 	GPIO_MODE_OUTPUT_PP,
- 302              		.loc 1 86 2 view .LVU67
-  86:Src/main.c    **** 	GPIO_MODE_OUTPUT_PP,
- 303              		.loc 1 86 19 is_stmt 0 view .LVU68
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 11
+ 302              		.loc 1 84 2 view .LVU65
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 11
 
 
- 304 0020 1422     		movs	r2, #20
- 305 0022 0021     		movs	r1, #0
- 306 0024 01A8     		add	r0, sp, #4
- 307 0026 FFF7FEFF 		bl	memset
- 308              	.LVL20:
- 309 002a FC23     		movs	r3, #252
- 310 002c 9B00     		lsls	r3, r3, #2
- 311 002e 0193     		str	r3, [sp, #4]
- 312 0030 0126     		movs	r6, #1
- 313 0032 0296     		str	r6, [sp, #8]
+ 303 001e 009B     		ldr	r3, [sp]
+ 304              	.LBE3:
+  84:Src/main.c    **** 	// Set up a configuration struct to pass to the initialization function
+ 305              		.loc 1 84 2 view .LVU66
+  86:Src/main.c    **** 	GPIO_MODE_OUTPUT_PP,
+ 306              		.loc 1 86 2 view .LVU67
+  86:Src/main.c    **** 	GPIO_MODE_OUTPUT_PP,
+ 307              		.loc 1 86 19 is_stmt 0 view .LVU68
+ 308 0020 1422     		movs	r2, #20
+ 309 0022 0021     		movs	r1, #0
+ 310 0024 01A8     		add	r0, sp, #4
+ 311 0026 FFF7FEFF 		bl	memset
+ 312              	.LVL20:
+ 313 002a FC23     		movs	r3, #252
+ 314 002c 9B00     		lsls	r3, r3, #2
+ 315 002e 0193     		str	r3, [sp, #4]
+ 316 0030 0126     		movs	r6, #1
+ 317 0032 0296     		str	r6, [sp, #8]
   90:Src/main.c    **** 	// HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Start PC8 high (orange)
- 314              		.loc 1 90 2 is_stmt 1 view .LVU69
- 315 0034 364C     		ldr	r4, .L25+4
- 316 0036 01A9     		add	r1, sp, #4
- 317 0038 2000     		movs	r0, r4
- 318 003a FFF7FEFF 		bl	HAL_GPIO_Init
- 319              	.LVL21:
+ 318              		.loc 1 90 2 is_stmt 1 view .LVU69
+ 319 0034 354C     		ldr	r4, .L25+4
+ 320 0036 01A9     		add	r1, sp, #4
+ 321 0038 2000     		movs	r0, r4
+ 322 003a FFF7FEFF 		bl	HAL_GPIO_Init
+ 323              	.LVL21:
   98:Src/main.c    ****   GPIOC->MODER &= ~(1<<9); // clear PC4 bit
- 320              		.loc 1 98 3 view .LVU70
+ 324              		.loc 1 98 3 view .LVU70
   98:Src/main.c    ****   GPIOC->MODER &= ~(1<<9); // clear PC4 bit
- 321              		.loc 1 98 8 is_stmt 0 view .LVU71
- 322 003e 2368     		ldr	r3, [r4]
+ 325              		.loc 1 98 8 is_stmt 0 view .LVU71
+ 326 003e 2368     		ldr	r3, [r4]
   98:Src/main.c    ****   GPIOC->MODER &= ~(1<<9); // clear PC4 bit
- 323              		.loc 1 98 16 view .LVU72
- 324 0040 344A     		ldr	r2, .L25+8
- 325 0042 1340     		ands	r3, r2
- 326 0044 2360     		str	r3, [r4]
+ 327              		.loc 1 98 16 view .LVU72
+ 328 0040 334A     		ldr	r2, .L25+8
+ 329 0042 1340     		ands	r3, r2
+ 330 0044 2360     		str	r3, [r4]
   99:Src/main.c    ****   GPIOC->MODER |= (1<<9); // set to alternate (10)
- 327              		.loc 1 99 3 is_stmt 1 view .LVU73
+ 331              		.loc 1 99 3 is_stmt 1 view .LVU73
   99:Src/main.c    ****   GPIOC->MODER |= (1<<9); // set to alternate (10)
- 328              		.loc 1 99 8 is_stmt 0 view .LVU74
- 329 0046 2368     		ldr	r3, [r4]
+ 332              		.loc 1 99 8 is_stmt 0 view .LVU74
+ 333 0046 2368     		ldr	r3, [r4]
   99:Src/main.c    ****   GPIOC->MODER |= (1<<9); // set to alternate (10)
- 330              		.loc 1 99 16 view .LVU75
- 331 0048 334A     		ldr	r2, .L25+12
- 332 004a 1340     		ands	r3, r2
- 333 004c 2360     		str	r3, [r4]
+ 334              		.loc 1 99 16 view .LVU75
+ 335 0048 324A     		ldr	r2, .L25+12
+ 336 004a 1340     		ands	r3, r2
+ 337 004c 2360     		str	r3, [r4]
  100:Src/main.c    ****   GPIOC->MODER &= ~(1<<10); // clear PC5 bit
- 334              		.loc 1 100 3 is_stmt 1 view .LVU76
+ 338              		.loc 1 100 3 is_stmt 1 view .LVU76
  100:Src/main.c    ****   GPIOC->MODER &= ~(1<<10); // clear PC5 bit
- 335              		.loc 1 100 8 is_stmt 0 view .LVU77
- 336 004e 2268     		ldr	r2, [r4]
+ 339              		.loc 1 100 8 is_stmt 0 view .LVU77
+ 340 004e 2268     		ldr	r2, [r4]
  100:Src/main.c    ****   GPIOC->MODER &= ~(1<<10); // clear PC5 bit
- 337              		.loc 1 100 16 view .LVU78
- 338 0050 8023     		movs	r3, #128
- 339 0052 9B00     		lsls	r3, r3, #2
- 340 0054 1343     		orrs	r3, r2
- 341 0056 2360     		str	r3, [r4]
+ 341              		.loc 1 100 16 view .LVU78
+ 342 0050 8023     		movs	r3, #128
+ 343 0052 9B00     		lsls	r3, r3, #2
+ 344 0054 1343     		orrs	r3, r2
+ 345 0056 2360     		str	r3, [r4]
  101:Src/main.c    ****   GPIOC->MODER &= ~(1<<11); // clear PC5 bit
- 342              		.loc 1 101 3 is_stmt 1 view .LVU79
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 12
+
+
+ 346              		.loc 1 101 3 is_stmt 1 view .LVU79
  101:Src/main.c    ****   GPIOC->MODER &= ~(1<<11); // clear PC5 bit
- 343              		.loc 1 101 8 is_stmt 0 view .LVU80
- 344 0058 2368     		ldr	r3, [r4]
+ 347              		.loc 1 101 8 is_stmt 0 view .LVU80
+ 348 0058 2368     		ldr	r3, [r4]
  101:Src/main.c    ****   GPIOC->MODER &= ~(1<<11); // clear PC5 bit
- 345              		.loc 1 101 16 view .LVU81
- 346 005a 304A     		ldr	r2, .L25+16
- 347 005c 1340     		ands	r3, r2
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 12
-
-
- 348 005e 2360     		str	r3, [r4]
+ 349              		.loc 1 101 16 view .LVU81
+ 350 005a 2F4A     		ldr	r2, .L25+16
+ 351 005c 1340     		ands	r3, r2
+ 352 005e 2360     		str	r3, [r4]
  102:Src/main.c    ****   GPIOC->MODER |= (1<<11); // set to alternate (10)
- 349              		.loc 1 102 3 is_stmt 1 view .LVU82
+ 353              		.loc 1 102 3 is_stmt 1 view .LVU82
  102:Src/main.c    ****   GPIOC->MODER |= (1<<11); // set to alternate (10)
- 350              		.loc 1 102 8 is_stmt 0 view .LVU83
- 351 0060 2368     		ldr	r3, [r4]
+ 354              		.loc 1 102 8 is_stmt 0 view .LVU83
+ 355 0060 2368     		ldr	r3, [r4]
  102:Src/main.c    ****   GPIOC->MODER |= (1<<11); // set to alternate (10)
- 352              		.loc 1 102 16 view .LVU84
- 353 0062 2F4A     		ldr	r2, .L25+20
- 354 0064 1340     		ands	r3, r2
- 355 0066 2360     		str	r3, [r4]
+ 356              		.loc 1 102 16 view .LVU84
+ 357 0062 2E4A     		ldr	r2, .L25+20
+ 358 0064 1340     		ands	r3, r2
+ 359 0066 2360     		str	r3, [r4]
  103:Src/main.c    ****   // Assign AF1 to PC4 and PC5 -- 0001
- 356              		.loc 1 103 3 is_stmt 1 view .LVU85
+ 360              		.loc 1 103 3 is_stmt 1 view .LVU85
  103:Src/main.c    ****   // Assign AF1 to PC4 and PC5 -- 0001
- 357              		.loc 1 103 8 is_stmt 0 view .LVU86
- 358 0068 2268     		ldr	r2, [r4]
+ 361              		.loc 1 103 8 is_stmt 0 view .LVU86
+ 362 0068 2268     		ldr	r2, [r4]
  103:Src/main.c    ****   // Assign AF1 to PC4 and PC5 -- 0001
- 359              		.loc 1 103 16 view .LVU87
- 360 006a 8023     		movs	r3, #128
- 361 006c 1B01     		lsls	r3, r3, #4
- 362 006e 1343     		orrs	r3, r2
- 363 0070 2360     		str	r3, [r4]
+ 363              		.loc 1 103 16 view .LVU87
+ 364 006a 8023     		movs	r3, #128
+ 365 006c 1B01     		lsls	r3, r3, #4
+ 366 006e 1343     		orrs	r3, r2
+ 367 0070 2360     		str	r3, [r4]
  105:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 17); //AFSEL4 bit 17 (clear)
- 364              		.loc 1 105 3 is_stmt 1 view .LVU88
+ 368              		.loc 1 105 3 is_stmt 1 view .LVU88
  105:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 17); //AFSEL4 bit 17 (clear)
- 365              		.loc 1 105 13 is_stmt 0 view .LVU89
- 366 0072 226A     		ldr	r2, [r4, #32]
+ 369              		.loc 1 105 13 is_stmt 0 view .LVU89
+ 370 0072 226A     		ldr	r2, [r4, #32]
  105:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 17); //AFSEL4 bit 17 (clear)
- 367              		.loc 1 105 17 view .LVU90
- 368 0074 8023     		movs	r3, #128
- 369 0076 5B02     		lsls	r3, r3, #9
- 370 0078 1343     		orrs	r3, r2
- 371 007a 2362     		str	r3, [r4, #32]
+ 371              		.loc 1 105 17 view .LVU90
+ 372 0074 8023     		movs	r3, #128
+ 373 0076 5B02     		lsls	r3, r3, #9
+ 374 0078 1343     		orrs	r3, r2
+ 375 007a 2362     		str	r3, [r4, #32]
  106:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 18); //AFSEL4 bit 18 (clear)
- 372              		.loc 1 106 3 is_stmt 1 view .LVU91
+ 376              		.loc 1 106 3 is_stmt 1 view .LVU91
  106:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 18); //AFSEL4 bit 18 (clear)
- 373              		.loc 1 106 13 is_stmt 0 view .LVU92
- 374 007c 236A     		ldr	r3, [r4, #32]
+ 377              		.loc 1 106 13 is_stmt 0 view .LVU92
+ 378 007c 236A     		ldr	r3, [r4, #32]
  106:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 18); //AFSEL4 bit 18 (clear)
- 375              		.loc 1 106 17 view .LVU93
- 376 007e 294A     		ldr	r2, .L25+24
- 377 0080 1340     		ands	r3, r2
- 378 0082 2362     		str	r3, [r4, #32]
+ 379              		.loc 1 106 17 view .LVU93
+ 380 007e 284A     		ldr	r2, .L25+24
+ 381 0080 1340     		ands	r3, r2
+ 382 0082 2362     		str	r3, [r4, #32]
  107:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 19); //AFSEL4 bit 19 (clear)
- 379              		.loc 1 107 3 is_stmt 1 view .LVU94
+ 383              		.loc 1 107 3 is_stmt 1 view .LVU94
  107:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 19); //AFSEL4 bit 19 (clear)
- 380              		.loc 1 107 13 is_stmt 0 view .LVU95
- 381 0084 236A     		ldr	r3, [r4, #32]
+ 384              		.loc 1 107 13 is_stmt 0 view .LVU95
+ 385 0084 236A     		ldr	r3, [r4, #32]
  107:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 19); //AFSEL4 bit 19 (clear)
- 382              		.loc 1 107 17 view .LVU96
- 383 0086 284A     		ldr	r2, .L25+28
- 384 0088 1340     		ands	r3, r2
- 385 008a 2362     		str	r3, [r4, #32]
- 108:Src/main.c    ****   GPIOC->AFR[0] |= (1 << 20); //AFSEL5 bit 20
- 386              		.loc 1 108 3 is_stmt 1 view .LVU97
- 108:Src/main.c    ****   GPIOC->AFR[0] |= (1 << 20); //AFSEL5 bit 20
- 387              		.loc 1 108 13 is_stmt 0 view .LVU98
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 13
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 13
 
 
- 388 008c 236A     		ldr	r3, [r4, #32]
+ 386              		.loc 1 107 17 view .LVU96
+ 387 0086 274A     		ldr	r2, .L25+28
+ 388 0088 1340     		ands	r3, r2
+ 389 008a 2362     		str	r3, [r4, #32]
  108:Src/main.c    ****   GPIOC->AFR[0] |= (1 << 20); //AFSEL5 bit 20
- 389              		.loc 1 108 17 view .LVU99
- 390 008e 274A     		ldr	r2, .L25+32
- 391 0090 1340     		ands	r3, r2
- 392 0092 2362     		str	r3, [r4, #32]
+ 390              		.loc 1 108 3 is_stmt 1 view .LVU97
+ 108:Src/main.c    ****   GPIOC->AFR[0] |= (1 << 20); //AFSEL5 bit 20
+ 391              		.loc 1 108 13 is_stmt 0 view .LVU98
+ 392 008c 236A     		ldr	r3, [r4, #32]
+ 108:Src/main.c    ****   GPIOC->AFR[0] |= (1 << 20); //AFSEL5 bit 20
+ 393              		.loc 1 108 17 view .LVU99
+ 394 008e 264A     		ldr	r2, .L25+32
+ 395 0090 1340     		ands	r3, r2
+ 396 0092 2362     		str	r3, [r4, #32]
  109:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 21); //AFSEL5 bit 21 (clear)
- 393              		.loc 1 109 3 is_stmt 1 view .LVU100
+ 397              		.loc 1 109 3 is_stmt 1 view .LVU100
  109:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 21); //AFSEL5 bit 21 (clear)
- 394              		.loc 1 109 13 is_stmt 0 view .LVU101
- 395 0094 226A     		ldr	r2, [r4, #32]
+ 398              		.loc 1 109 13 is_stmt 0 view .LVU101
+ 399 0094 226A     		ldr	r2, [r4, #32]
  109:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 21); //AFSEL5 bit 21 (clear)
- 396              		.loc 1 109 17 view .LVU102
- 397 0096 8023     		movs	r3, #128
- 398 0098 5B03     		lsls	r3, r3, #13
- 399 009a 1343     		orrs	r3, r2
- 400 009c 2362     		str	r3, [r4, #32]
+ 400              		.loc 1 109 17 view .LVU102
+ 401 0096 8023     		movs	r3, #128
+ 402 0098 5B03     		lsls	r3, r3, #13
+ 403 009a 1343     		orrs	r3, r2
+ 404 009c 2362     		str	r3, [r4, #32]
  110:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 22); //AFSEL5 bit 22 (clear)
- 401              		.loc 1 110 3 is_stmt 1 view .LVU103
+ 405              		.loc 1 110 3 is_stmt 1 view .LVU103
  110:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 22); //AFSEL5 bit 22 (clear)
- 402              		.loc 1 110 13 is_stmt 0 view .LVU104
- 403 009e 236A     		ldr	r3, [r4, #32]
+ 406              		.loc 1 110 13 is_stmt 0 view .LVU104
+ 407 009e 236A     		ldr	r3, [r4, #32]
  110:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 22); //AFSEL5 bit 22 (clear)
- 404              		.loc 1 110 17 view .LVU105
- 405 00a0 234A     		ldr	r2, .L25+36
- 406 00a2 1340     		ands	r3, r2
- 407 00a4 2362     		str	r3, [r4, #32]
+ 408              		.loc 1 110 17 view .LVU105
+ 409 00a0 224A     		ldr	r2, .L25+36
+ 410 00a2 1340     		ands	r3, r2
+ 411 00a4 2362     		str	r3, [r4, #32]
  111:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 23); //AFSEL5 bit 23 (clear)
- 408              		.loc 1 111 3 is_stmt 1 view .LVU106
+ 412              		.loc 1 111 3 is_stmt 1 view .LVU106
  111:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 23); //AFSEL5 bit 23 (clear)
- 409              		.loc 1 111 13 is_stmt 0 view .LVU107
- 410 00a6 236A     		ldr	r3, [r4, #32]
+ 413              		.loc 1 111 13 is_stmt 0 view .LVU107
+ 414 00a6 236A     		ldr	r3, [r4, #32]
  111:Src/main.c    ****   GPIOC->AFR[0] &= ~(1 << 23); //AFSEL5 bit 23 (clear)
- 411              		.loc 1 111 17 view .LVU108
- 412 00a8 224A     		ldr	r2, .L25+40
- 413 00aa 1340     		ands	r3, r2
- 414 00ac 2362     		str	r3, [r4, #32]
+ 415              		.loc 1 111 17 view .LVU108
+ 416 00a8 214A     		ldr	r2, .L25+40
+ 417 00aa 1340     		ands	r3, r2
+ 418 00ac 2362     		str	r3, [r4, #32]
  112:Src/main.c    **** 
- 415              		.loc 1 112 3 is_stmt 1 view .LVU109
+ 419              		.loc 1 112 3 is_stmt 1 view .LVU109
  112:Src/main.c    **** 
- 416              		.loc 1 112 13 is_stmt 0 view .LVU110
- 417 00ae 236A     		ldr	r3, [r4, #32]
+ 420              		.loc 1 112 13 is_stmt 0 view .LVU110
+ 421 00ae 236A     		ldr	r3, [r4, #32]
  112:Src/main.c    **** 
- 418              		.loc 1 112 17 view .LVU111
- 419 00b0 214A     		ldr	r2, .L25+44
- 420 00b2 1340     		ands	r3, r2
- 421 00b4 2362     		str	r3, [r4, #32]
+ 422              		.loc 1 112 17 view .LVU111
+ 423 00b0 204A     		ldr	r2, .L25+44
+ 424 00b2 1340     		ands	r3, r2
+ 425 00b4 2362     		str	r3, [r4, #32]
  116:Src/main.c    ****   // Set the Baud rate for communication to be 115200 bits/second.
- 422              		.loc 1 116 3 is_stmt 1 view .LVU112
+ 426              		.loc 1 116 3 is_stmt 1 view .LVU112
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 14
+
+
  116:Src/main.c    ****   // Set the Baud rate for communication to be 115200 bits/second.
- 423              		.loc 1 116 16 is_stmt 0 view .LVU113
- 424 00b6 8023     		movs	r3, #128
- 425 00b8 DB02     		lsls	r3, r3, #11
- 426 00ba EB61     		str	r3, [r5, #28]
+ 427              		.loc 1 116 16 is_stmt 0 view .LVU113
+ 428 00b6 8023     		movs	r3, #128
+ 429 00b8 DB02     		lsls	r3, r3, #11
+ 430 00ba EB61     		str	r3, [r5, #28]
  118:Src/main.c    ****   // Enable transmitter and receiver hardware
- 427              		.loc 1 118 3 is_stmt 1 view .LVU114
+ 431              		.loc 1 118 3 is_stmt 1 view .LVU114
  118:Src/main.c    ****   // Enable transmitter and receiver hardware
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 14
-
-
- 428              		.loc 1 118 17 is_stmt 0 view .LVU115
- 429 00bc FFF7FEFF 		bl	HAL_RCC_GetHCLKFreq
- 430              	.LVL22:
+ 432              		.loc 1 118 17 is_stmt 0 view .LVU115
+ 433 00bc FFF7FEFF 		bl	HAL_RCC_GetHCLKFreq
+ 434              	.LVL22:
  118:Src/main.c    ****   // Enable transmitter and receiver hardware
- 431              		.loc 1 118 39 discriminator 1 view .LVU116
- 432 00c0 E121     		movs	r1, #225
- 433 00c2 4902     		lsls	r1, r1, #9
- 434 00c4 FFF7FEFF 		bl	__aeabi_uidiv
- 435              	.LVL23:
+ 435              		.loc 1 118 39 discriminator 1 view .LVU116
+ 436 00c0 9621     		movs	r1, #150
+ 437 00c2 8901     		lsls	r1, r1, #6
+ 438 00c4 FFF7FEFF 		bl	__aeabi_uidiv
+ 439              	.LVL23:
  118:Src/main.c    ****   // Enable transmitter and receiver hardware
- 436              		.loc 1 118 15 discriminator 1 view .LVU117
- 437 00c8 1C4B     		ldr	r3, .L25+48
- 438 00ca D860     		str	r0, [r3, #12]
+ 440              		.loc 1 118 15 discriminator 1 view .LVU117
+ 441 00c8 1B4B     		ldr	r3, .L25+48
+ 442 00ca D860     		str	r0, [r3, #12]
  120:Src/main.c    ****   USART3->CR1 |= (1 << 2); // Enable receiver
- 439              		.loc 1 120 3 is_stmt 1 view .LVU118
+ 443              		.loc 1 120 3 is_stmt 1 view .LVU118
  120:Src/main.c    ****   USART3->CR1 |= (1 << 2); // Enable receiver
- 440              		.loc 1 120 9 is_stmt 0 view .LVU119
- 441 00cc 1A68     		ldr	r2, [r3]
+ 444              		.loc 1 120 9 is_stmt 0 view .LVU119
+ 445 00cc 1A68     		ldr	r2, [r3]
  120:Src/main.c    ****   USART3->CR1 |= (1 << 2); // Enable receiver
- 442              		.loc 1 120 15 view .LVU120
- 443 00ce 0821     		movs	r1, #8
- 444 00d0 0A43     		orrs	r2, r1
- 445 00d2 1A60     		str	r2, [r3]
+ 446              		.loc 1 120 15 view .LVU120
+ 447 00ce 0821     		movs	r1, #8
+ 448 00d0 0A43     		orrs	r2, r1
+ 449 00d2 1A60     		str	r2, [r3]
  121:Src/main.c    ****   USART3->CR1 |= (1 << 0); // Enable USART
- 446              		.loc 1 121 3 is_stmt 1 view .LVU121
+ 450              		.loc 1 121 3 is_stmt 1 view .LVU121
  121:Src/main.c    ****   USART3->CR1 |= (1 << 0); // Enable USART
- 447              		.loc 1 121 9 is_stmt 0 view .LVU122
- 448 00d4 1A68     		ldr	r2, [r3]
+ 451              		.loc 1 121 9 is_stmt 0 view .LVU122
+ 452 00d4 1A68     		ldr	r2, [r3]
  121:Src/main.c    ****   USART3->CR1 |= (1 << 0); // Enable USART
- 449              		.loc 1 121 15 view .LVU123
- 450 00d6 0439     		subs	r1, r1, #4
- 451 00d8 0A43     		orrs	r2, r1
- 452 00da 1A60     		str	r2, [r3]
+ 453              		.loc 1 121 15 view .LVU123
+ 454 00d6 0439     		subs	r1, r1, #4
+ 455 00d8 0A43     		orrs	r2, r1
+ 456 00da 1A60     		str	r2, [r3]
  122:Src/main.c    ****   // **** Initialize the USART **** //
- 453              		.loc 1 122 3 is_stmt 1 view .LVU124
+ 457              		.loc 1 122 3 is_stmt 1 view .LVU124
  122:Src/main.c    ****   // **** Initialize the USART **** //
- 454              		.loc 1 122 9 is_stmt 0 view .LVU125
- 455 00dc 1A68     		ldr	r2, [r3]
+ 458              		.loc 1 122 9 is_stmt 0 view .LVU125
+ 459 00dc 1A68     		ldr	r2, [r3]
  122:Src/main.c    ****   // **** Initialize the USART **** //
- 456              		.loc 1 122 15 view .LVU126
- 457 00de 3243     		orrs	r2, r6
- 458 00e0 1A60     		str	r2, [r3]
- 459 00e2 07E0     		b	.L19
- 460              	.LVL24:
- 461              	.L24:
- 462              	.LBB4:
- 133:Src/main.c    ****       case 'b':
- 463              		.loc 1 133 9 is_stmt 1 view .LVU127
- 464 00e4 4021     		movs	r1, #64
- 465 00e6 0A48     		ldr	r0, .L25+4
- 466 00e8 FFF7FEFF 		bl	HAL_GPIO_TogglePin
- 467              	.LVL25:
- 468              	.L20:
- 135:Src/main.c    ****     default:
- 469              		.loc 1 135 9 view .LVU128
- 470 00ec 8021     		movs	r1, #128
- 471 00ee 0848     		ldr	r0, .L25+4
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 15
+ 460              		.loc 1 122 15 view .LVU126
+ 461 00de 3243     		orrs	r2, r6
+ 462 00e0 1A60     		str	r2, [r3]
+ 463 00e2 03E0     		b	.L20
+ 464              	.LVL24:
+ 465              	.L24:
+ 466              	.LBB4:
+ 467              	.LBB5:
+ 133:Src/main.c    ****         break;
+ 468              		.loc 1 133 9 is_stmt 1 view .LVU127
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 15
 
 
- 472 00f0 FFF7FEFF 		bl	HAL_GPIO_TogglePin
- 473              	.LVL26:
- 474              	.L19:
+ 469 00e4 4021     		movs	r1, #64
+ 470 00e6 0948     		ldr	r0, .L25+4
+ 471 00e8 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 472              	.LVL25:
+ 134:Src/main.c    ****     default:
+ 473              		.loc 1 134 9 view .LVU128
+ 474              	.L20:
+ 134:Src/main.c    ****     default:
+ 475              		.loc 1 134 9 is_stmt 0 view .LVU129
+ 476              	.LBE5:
  127:Src/main.c    ****     // LED to check: red (114)
- 475              		.loc 1 127 45 discriminator 1 view .LVU129
+ 477              		.loc 1 127 45 is_stmt 1 discriminator 1 view .LVU130
  127:Src/main.c    ****     // LED to check: red (114)
- 476              		.loc 1 127 12 discriminator 1 view .LVU130
+ 478              		.loc 1 127 12 discriminator 1 view .LVU131
  127:Src/main.c    ****     // LED to check: red (114)
- 477              		.loc 1 127 20 is_stmt 0 discriminator 1 view .LVU131
- 478 00f4 124B     		ldr	r3, .L25+52
- 479 00f6 DB69     		ldr	r3, [r3, #28]
+ 479              		.loc 1 127 20 is_stmt 0 discriminator 1 view .LVU132
+ 480 00ec 124B     		ldr	r3, .L25+48
+ 481 00ee DB69     		ldr	r3, [r3, #28]
  127:Src/main.c    ****     // LED to check: red (114)
- 480              		.loc 1 127 12 discriminator 1 view .LVU132
- 481 00f8 9B06     		lsls	r3, r3, #26
- 482 00fa FBD5     		bpl	.L19
+ 482              		.loc 1 127 12 discriminator 1 view .LVU133
+ 483 00f0 9B06     		lsls	r3, r3, #26
+ 484 00f2 FBD5     		bpl	.L20
  130:Src/main.c    ****     switch (received_char) {
- 483              		.loc 1 130 5 is_stmt 1 view .LVU133
+ 485              		.loc 1 130 5 is_stmt 1 view .LVU134
  130:Src/main.c    ****     switch (received_char) {
- 484              		.loc 1 130 35 is_stmt 0 view .LVU134
- 485 00fc 0F4B     		ldr	r3, .L25+48
- 486 00fe 9B8C     		ldrh	r3, [r3, #36]
+ 486              		.loc 1 130 35 is_stmt 0 view .LVU135
+ 487 00f4 104B     		ldr	r3, .L25+48
+ 488 00f6 9B8C     		ldrh	r3, [r3, #36]
  130:Src/main.c    ****     switch (received_char) {
- 487              		.loc 1 130 13 view .LVU135
- 488 0100 DBB2     		uxtb	r3, r3
- 489              	.LVL27:
+ 489              		.loc 1 130 13 view .LVU136
+ 490 00f8 DBB2     		uxtb	r3, r3
+ 491              	.LVL26:
  131:Src/main.c    ****       case 'r':
- 490              		.loc 1 131 5 is_stmt 1 view .LVU136
- 491 0102 622B     		cmp	r3, #98
- 492 0104 F2D0     		beq	.L20
- 493 0106 722B     		cmp	r3, #114
- 494 0108 F4D1     		bne	.L19
- 495 010a EBE7     		b	.L24
- 496              	.L26:
- 497              		.align	2
- 498              	.L25:
- 499 010c 00100240 		.word	1073876992
- 500 0110 00080048 		.word	1207961600
- 501 0114 FFFEFFFF 		.word	-257
- 502 0118 FFFDFFFF 		.word	-513
- 503 011c FFFBFFFF 		.word	-1025
- 504 0120 FFF7FFFF 		.word	-2049
- 505 0124 FFFFFDFF 		.word	-131073
- 506 0128 FFFFFBFF 		.word	-262145
- 507 012c FFFFF7FF 		.word	-524289
- 508 0130 FFFFDFFF 		.word	-2097153
- 509 0134 FFFFBFFF 		.word	-4194305
- 510 0138 FFFF7FFF 		.word	-8388609
- 511 013c 00480040 		.word	1073760256
- 512 0140 00380140 		.word	1073821696
- 513              	.LBE4:
- 514              		.cfi_endproc
- 515              	.LFE40:
- 517              		.text
- 518              	.Letext0:
- 519              		.file 2 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
- 520              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
- 521              		.file 4 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 16
+ 492              		.loc 1 131 5 is_stmt 1 view .LVU137
+ 493 00fa 722B     		cmp	r3, #114
+ 494 00fc F2D0     		beq	.L24
+ 495              	.LBB6:
+ 136:Src/main.c    ****       break;
+ 496              		.loc 1 136 9 view .LVU138
+ 497 00fe 0F48     		ldr	r0, .L25+52
+ 498 0100 FFF7FEFF 		bl	printf
+ 499              	.LVL27:
+ 137:Src/main.c    ****     }
+ 500              		.loc 1 137 7 view .LVU139
+ 501 0104 F2E7     		b	.L20
+ 502              	.L26:
+ 503 0106 C046     		.align	2
+ 504              	.L25:
+ 505 0108 00100240 		.word	1073876992
+ 506 010c 00080048 		.word	1207961600
+ 507 0110 FFFEFFFF 		.word	-257
+ 508 0114 FFFDFFFF 		.word	-513
+ 509 0118 FFFBFFFF 		.word	-1025
+ 510 011c FFF7FFFF 		.word	-2049
+ 511 0120 FFFFFDFF 		.word	-131073
+ 512 0124 FFFFFBFF 		.word	-262145
+ 513 0128 FFFFF7FF 		.word	-524289
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 16
 
 
- 522              		.file 5 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
- 523              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
- 524              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
- 525              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
- 526              		.file 9 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
- 527              		.file 10 "<built-in>"
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s 			page 17
+ 514 012c FFFFDFFF 		.word	-2097153
+ 515 0130 FFFFBFFF 		.word	-4194305
+ 516 0134 FFFF7FFF 		.word	-8388609
+ 517 0138 00480040 		.word	1073760256
+ 518 013c 00000000 		.word	.LC2
+ 519              	.LBE6:
+ 520              	.LBE4:
+ 521              		.cfi_endproc
+ 522              	.LFE40:
+ 524              		.text
+ 525              	.Letext0:
+ 526              		.file 2 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
+ 527              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+ 528              		.file 4 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
+ 529              		.file 5 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
+ 530              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
+ 531              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
+ 532              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
+ 533              		.file 9 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
+ 534              		.file 10 "<built-in>"
+ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s 			page 17
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:19     .text.transmitCharacter:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:25     .text.transmitCharacter:00000000 transmitCharacter
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:52     .text.transmitCharacter:00000010 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:57     .text.transmitString:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:63     .text.transmitString:00000000 transmitString
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:113    .text._Error_Handler:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:119    .text._Error_Handler:00000000 _Error_Handler
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:137    .rodata.SystemClock_Config.str1.4:00000000 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:142    .text.SystemClock_Config:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:148    .text.SystemClock_Config:00000000 SystemClock_Config
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:251    .text.SystemClock_Config:0000006c $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:256    .text.main:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:262    .text.main:00000000 main
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccrTvNC9.s:499    .text.main:0000010c $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:19     .text.transmitCharacter:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:25     .text.transmitCharacter:00000000 transmitCharacter
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:52     .text.transmitCharacter:00000010 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:57     .text.transmitString:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:63     .text.transmitString:00000000 transmitString
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:113    .text._Error_Handler:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:119    .text._Error_Handler:00000000 _Error_Handler
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:137    .rodata.SystemClock_Config.str1.4:00000000 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:142    .text.SystemClock_Config:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:148    .text.SystemClock_Config:00000000 SystemClock_Config
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:251    .text.SystemClock_Config:0000006c $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:256    .rodata.main.str1.4:00000000 $d
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:260    .text.main:00000000 $t
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:266    .text.main:00000000 main
+/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccRIfmjW.s:505    .text.main:00000108 $d
 
 UNDEFINED SYMBOLS
 __aeabi_uidiv
@@ -939,3 +954,4 @@ HAL_Init
 memset
 HAL_GPIO_Init
 HAL_GPIO_TogglePin
+printf

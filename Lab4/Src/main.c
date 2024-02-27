@@ -88,7 +88,7 @@ int main(void)
 	GPIO_SPEED_FREQ_LOW,
 	GPIO_NOPULL};
 	HAL_GPIO_Init(GPIOC, &initStr); // Initialize pins PC6,7,8 & PC9
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Start PC8 high (orange)
+	// HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Start PC8 high (orange)
 
   // **** Alternate Function **** //
   // Set the selected pins into alternate function mode and program the correct alternate function number into the GPIO AFR registers
@@ -115,7 +115,7 @@ int main(void)
   // Enable the USART clock in the RCC
   RCC->APB1ENR = RCC_APB1ENR_USART3EN;
   // Set the Baud rate for communication to be 115200 bits/second.
-  USART3->BRR = HAL_RCC_GetHCLKFreq() / 115200; 
+  USART3->BRR = HAL_RCC_GetHCLKFreq() / 9600; 
   // Enable transmitter and receiver hardware
   USART3->CR1 |= (1 << 3); // Enable transmitter
   USART3->CR1 |= (1 << 2); // Enable receiver
@@ -124,16 +124,16 @@ int main(void)
 
 	while (1) {
     // Check and wait on the USART status flag that indicates the receive (read) register is not empty
-    while (!(USART1->ISR & USART_ISR_RXNE)){}
+    while (!(USART3->ISR & USART_ISR_RXNE)){}
     // LED to check: red (114)
     // Read the received character
     uint8_t received_char = USART3->RDR;
     switch (received_char) {
       case 'r':
         HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
-      case 'b':
-        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
+        break;
     default:
+        printf("Error, invalid LED");
       break;
     }
 	}
