@@ -174,6 +174,7 @@ int main(void)
         break;
       }
       newData = 0;
+      // Once count is 2, means the whole protocol is done so I should showcase it?
       count++;
       if (count >= 2)
         count = 0;
