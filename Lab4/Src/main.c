@@ -145,22 +145,22 @@ int main(void)
         switch (receivedChar)
         {
         case 'r':
-          LED_case = GPIO_PIN_6;
+          LED_case = 1;
           transmitCharacter('r');
           count++;
           break;
         case 'b':
-          LED_case = GPIO_PIN_7;
+          LED_case = 2;
           transmitCharacter('b');
           count++;
           break;
         case 'o':
-          LED_case = GPIO_PIN_8;
+          LED_case = 3;
           transmitCharacter('o');
           count++;
           break;
         case 'g':
-          LED_case = GPIO_PIN_9;
+          LED_case = 4;
           transmitCharacter('g');
           count++;
           break;
@@ -176,17 +176,51 @@ int main(void)
         switch (receivedChar)
         {
         case '0':
-          HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_RESET);
+          if (LED_case == 1){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_RESET);
+          }
+          if (LED_case == 2){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
+          }
+          if (LED_case == 3){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+          }
+          if (LED_case == 4){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
+          }
           transmitCharacter('0');
           count = 0;
           break;
         case '1':
-          HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_SET);
+          if (LED_case == 1){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+          }
+          if (LED_case == 2){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
+          }
+          if (LED_case == 3){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+          }
+          if (LED_case == 4){
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);
+          }
           transmitCharacter('1');
           count = 0;
           break;
         case '2':
-          HAL_GPIO_TogglePin(GPIOC, LED_case);
+          if (LED_case == 1){
+            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+            // GPIOC->ODR &= ~(1 << 6);
+          }
+          if (LED_case == 2){
+            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
+          }
+          if (LED_case == 3){
+            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
+          }
+          if (LED_case == 4){
+            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
+          }
           transmitCharacter('2');
           count = 0;
           break;
