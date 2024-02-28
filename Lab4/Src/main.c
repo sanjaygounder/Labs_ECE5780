@@ -132,14 +132,14 @@ int main(void)
   NVIC_EnableIRQ(USART3_4_IRQn);
   // Set the priority for the interrupt to 0
   NVIC_SetPriority(USART3_4_IRQn, 0);
-  // transmitString("CMD? \0");
 
   while (1)
   {
-    // ******** 4.2 General Configuration ******** //
+    // ******** 4.3 General Configuration ******** //
+    // transmitString("CMD?");
     if ((newData == 1))
     {
-      uint16_t LED_case = 0; // LED to update
+      int LED_case; // LED to update
       if (count == 0)
       {
         switch (receivedChar)
@@ -210,7 +210,6 @@ int main(void)
         case '2':
           if (LED_case == 1){
             HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
-            // GPIOC->ODR &= ~(1 << 6);
           }
           if (LED_case == 2){
             HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
