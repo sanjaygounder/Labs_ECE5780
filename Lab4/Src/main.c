@@ -64,7 +64,8 @@ volatile int count = 0; // count of characters (after 2 we will reset this varia
 void SystemClock_Config(void);
 void transmitCharacter(char);
 void transmitString(char *);
-void USART3_IRQHandler(void);
+// void USART3_IRQHandler(void);
+void USART3_4_IRQHandler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -135,51 +136,73 @@ int main(void)
 
   while (1)
   {
-    while (!(USART3->ISR & USART_ISR_RXNE)){}
     // ******** 4.2 General Configuration ******** //
     if ((newData == 1))
     {
       uint16_t LED_case = 0; // LED to update
-      switch (receivedChar)
+      if (count == 0)
       {
-      case 'r':
-        LED_case = GPIO_PIN_6;
-        transmitCharacter('r');
+        switch (receivedChar)
+        {
+        case 'r':
+          LED_case = GPIO_PIN_6;
+          transmitCharacter('r');
+          count++;
+          break;
+        case 'b':
+          LED_case = GPIO_PIN_7;
+          transmitCharacter('b');
+          count++;
+          break;
+        case 'o':
+          LED_case = GPIO_PIN_8;
+          transmitCharacter('o');
+          count++;
+          break;
+        case 'g':
+          LED_case = GPIO_PIN_9;
+          transmitCharacter('g');
+          count++;
+          break;
+        default:
+          transmitString("Error: Wrong character input, needs to be r, b, g, or o");
+          transmitCharacter(receivedChar);
+          count = 0;
+          break;
+        }
+      }
+      else if (count == 1)
+      {
+        switch (receivedChar)
+        {
+        case '0':
+          HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_RESET);
+          transmitCharacter('0');
+          count = 0;
+          break;
+        case '1':
+          HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_SET);
+          transmitCharacter('1');
+          count = 0;
+          break;
+        case '2':
+          HAL_GPIO_TogglePin(GPIOC, LED_case);
+          transmitCharacter('2');
+          count = 0;
+          break;
+        default:
+          transmitString("Error: Input needs to a number between 0-2");
+          transmitCharacter(receivedChar);
+          count = 0;
+          break;
+        }
+      }
+      else {
         break;
-      case 'b':
-        LED_case = GPIO_PIN_7;
-        transmitCharacter('b');
-        break;
-      case 'o':
-        LED_case = GPIO_PIN_8;
-        transmitCharacter('o');
-        break;
-      case 'g':
-        LED_case = GPIO_PIN_9;
-        transmitCharacter('g');
-        break;
-      case '0':
-        HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_RESET);
-        transmitCharacter('0');
-        break;
-      case '1':
-        HAL_GPIO_WritePin(GPIOC, LED_case, GPIO_PIN_SET);
-        transmitCharacter('1');
-        break;
-      case '2':
-        HAL_GPIO_TogglePin(GPIOC, LED_case);
-        transmitCharacter('2');
-      default:
-        transmitString("Error: Input needs to be 2 characters with correct criteria of r,b,o,g and 0-2\0");
-        break;
+        newData = 0;
       }
       newData = 0;
-      // Once count is 2, means the whole protocol is done so I should showcase it?
-      count++;
-      if (count >= 2)
-        count = 0;
     }
-
 
     // ******** 4.2 General Configuration ******** //
     // uint8_t received_char = USART3->RDR;
@@ -193,21 +216,17 @@ int main(void)
     //   break;
     // }
     // transmitString(receivedChar);
-
-
-
-
   }
 }
 
 /**
  * USART3 Interrupt Handler
  */
-void USART3_IRQHandler()
+void USART3_4_IRQHandler()
 {
-  // receivedChar = (char)(USART3->RDR & 0xFF); // set global variable and mask it to only 2 characters
+  // HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
   receivedChar = USART3->RDR;
-  newData = 1;                  // Indicate new data is ready to be processed
+  newData = 1; // Indicate new data is ready to be processed
 }
 
 /**
