@@ -61,9 +61,8 @@ void _Error_Handler(char * file, int line);
 void SystemClock_Config(void);
 void write(char val);
 char read();
-void stop();
-int16_t readXAxis();
-int16_t readYAxis();
+int16_t readX();
+int16_t readY();
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -198,60 +197,52 @@ int main(void)
   // ******** 5.5 Initializing the Gyroscope ******** //
   write(0x20);
 
-  // Write ctrlReg1Value to the CTRL_REG1 register of the gyroscope
-  I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0)); // Clear SADD and NBYTES
+  // Write ctrlReg1Value to the CTRL_REG1 register of the gyroscope, 0x20 is address
+  I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0)); 
 	I2C2->CR2 &= ~(1 << 10); 
-  I2C2->CR2 |= (0x69 << 1) | (2 << 16); // Addressing the gyroscope
+  I2C2->CR2 |= (0x69 << 1) | (2 << 16); 
 
   // Set the START bit to begin the address frame
   I2C2->CR2 |= I2C_CR2_START;
 
   while (!(I2C2->ISR & (I2C_ISR_TXIS | I2C_ISR_NACKF))) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
   
   if (I2C2->ISR & I2C_ISR_NACKF) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high
   }
 
-  I2C2->TXDR = 0x20; // Register address of CTRL_REG1
+  I2C2->TXDR = 0x20; 
 
   while (!(I2C2->ISR & (I2C_ISR_TXIS | I2C_ISR_NACKF))) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
-  
 
   if (I2C2->ISR & I2C_ISR_NACKF) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
   
-  //bit pattern to turn on Xen, Yen, and PD/Noraml mode 
-  I2C2->TXDR = 0x0B; // 0x0B => 0000 1011
+  //bit pattern to turn on Xen, Yen, and PD/Noraml mode, 0x0B = 0000 1011
+  I2C2->TXDR = 0x0B;
 
   while (!(I2C2->ISR & (I2C_ISR_TC | I2C_ISR_NACKF)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
   if (I2C2->ISR & I2C_ISR_NACKF) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
-  // read CTRL_REG1 to make sure data is set correctly
 	write(0x20);
 	if (read() != 0x0b) {
-		GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED;
+		GPIOC->BSRR |= (1 << 6); // Set PC6 high, means it was not set correctly
 	}
 
   // ******** 5.6 Exercise Specifications ******** //  
@@ -267,35 +258,35 @@ int main(void)
 	const int16_t threshold = 0x01FF;
 
   while (1) {
-		xAxis = readXAxis();
-		yAxis = readYAxis();
+		xAxis = readX();
+		yAxis = readY();
 		
 		if (xAxis > threshold) {
-			GPIOC->BSRR |= (1 << 6); // Set PC6 to turn on the red LED
+			GPIOC->BSRR |= (1 << 6); // Set PC6
 		}
 		else {
-			GPIOC->BSRR |= (1 << (6 + 16)); // Clear PC6 to turn off the red LED
+			GPIOC->BSRR |= (1 << (6 + 16)); // Clear PC6
 		}
 		
 		if (yAxis < 0 - threshold) {
-			GPIOC->BSRR |= (1 << 7); // Set PC7 to turn on the blue LED
+			GPIOC->BSRR |= (1 << 7); // Set PC7 
 		}
 		else {
-			GPIOC->BSRR |= (1 << (7 + 16)); // Clear PC7 to turn off the blue LED
+			GPIOC->BSRR |= (1 << (7 + 16)); // Clear PC7 
 		}
 		
 		if (xAxis < 0 - threshold) {
-			GPIOC->BSRR |= (1 << 8); // Set PC8 to turn on the orange LED
+			GPIOC->BSRR |= (1 << 8); // Set PC8
 		}
 		else {
-			GPIOC->BSRR |= (1 << (8 + 16)); // Clear PC8 to turn off the orange LED
+			GPIOC->BSRR |= (1 << (8 + 16)); // Clear PC8 
 		}
 		
 		if (yAxis > threshold) {
-			GPIOC->BSRR |= (1 << 9); // Set PC9 to turn on the green LED
+			GPIOC->BSRR |= (1 << 9); // Set PC9
 		}
 		else {
-			GPIOC->BSRR |= (1 << (9 + 16)); // Clear PC9 to turn off the green LED
+			GPIOC->BSRR |= (1 << (9 + 16)); // Clear PC9 
 		}
 		
 		HAL_Delay(100);
@@ -303,27 +294,24 @@ int main(void)
 
 }
 
-
 void write(char val) {
   // Set the transaction parameters in the CR2 register
-	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0)); //clear SADD and NBYTES
-	// Set to write
+	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
+	// Set mode to write
 	I2C2->CR2 &= ~(1 << 10);
 	I2C2->CR2 |= (0x69 << 1) | (1 << 16);
 	
-  // Set the START bit to begin the address frame
+  // Set the START bit 
   I2C2->CR2 |= I2C_CR2_START;
 
   while (!(I2C2->ISR & (I2C_ISR_TXIS | I2C_ISR_NACKF))) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
   
   if (I2C2->ISR & I2C_ISR_NACKF) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
   // Set register of CTRL_REG1
@@ -331,14 +319,12 @@ void write(char val) {
 	
 	while (!(I2C2->ISR & (I2C_ISR_TC | I2C_ISR_NACKF)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
   if (I2C2->ISR & I2C_ISR_NACKF) 
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
   return 0;
@@ -349,169 +335,134 @@ char read() {
 	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
 	I2C2->CR2 = (0x69 << 1) | (1 << 16) | I2C_CR2_RD_WRN;
 	
-  // Set the START bit to begin the address frame
+  // Set the START bit 
   I2C2->CR2 |= I2C_CR2_START;
 
   // Wait until either RXNE or NACKF flags are set
   while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
-  // Check if NACKF flag is set (slave did not respond)
+  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
   if (I2C2->ISR & I2C_ISR_NACKF)
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
   char val = I2C2->RXDR;
 
   // Wait until TC (Transfer Complete) flag is set
-  while (!(I2C2->ISR & (I2C_ISR_TC | I2C_ISR_NACKF)))
+  while (!(I2C2->ISR & (I2C_ISR_TC)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
-  }
-
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
 	return val;
 }
 
-void stop() {
-	I2C2->CR2 |= (1 << 14);	// STOP I2C2
-}
-
-int16_t readXAxis() {
+int16_t readX() {
 	
   int16_t xAxis = 0;
 	write(0xA8);
-	stop();
+	I2C2->CR2 |= (1 << 14); // set STOP bit
 
 	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
 	I2C2->CR2 = (0x69 << 1) | (2 << 16) | I2C_CR2_RD_WRN;
 	
-  // Set the START bit to begin the address frame
+  // Set the START bit 
   I2C2->CR2 |= I2C_CR2_START;
 
-  // wait for first 8-bit data
+  // 1st 8-bit of data
 
   // Wait until either RXNE or NACKF flags are set
   while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
-  // Check if NACKF flag is set (slave did not respond)
+  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
   if (I2C2->ISR & I2C_ISR_NACKF)
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 	
 	xAxis = I2C2->RXDR;
 	
-	// wait for second 8-bit data
+	// 2nd 8-bit of data
 
   // Wait until either RXNE or NACKF flags are set
   while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
-  // Check if NACKF flag is set (slave did not respond)
+  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
   if (I2C2->ISR & I2C_ISR_NACKF)
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
 	xAxis |= (I2C2->RXDR << 8);
 	
   // Wait until TC (Transfer Complete) flag is set
-  while (!(I2C2->ISR & (I2C_ISR_TC | I2C_ISR_NACKF)))
+  while (!(I2C2->ISR & (I2C_ISR_TC)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
-  }
-
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
 	return xAxis;
 }
 
-int16_t readYAxis() {
+int16_t readY() {
 	
   int16_t yAxis = 0;
 	write(0xAA);
-	stop();
+	I2C2->CR2 |= (1 << 14);
 
 	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
 	I2C2->CR2 = (0x69 << 1) | (2 << 16) | I2C_CR2_RD_WRN;
 
-	// Set the START bit to begin the address frame
+	// Set the START bit 
   I2C2->CR2 |= I2C_CR2_START;
 	
-	// wait for first 8-bit data
+	// 1st 8-bit of data
 	
   // Wait until either RXNE or NACKF flags are set
   while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
-  // Check if NACKF flag is set (slave did not respond)
+  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
   if (I2C2->ISR & I2C_ISR_NACKF)
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high
   }
 	
 	yAxis = I2C2->RXDR;
 	
-	// wait for second 8-bit data
+	// 2nd 8-bit of data
 
 
   // Wait until either RXNE or NACKF flags are set
   while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
-  // Check if NACKF flag is set (slave did not respond)
+  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
   if (I2C2->ISR & I2C_ISR_NACKF)
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
 	yAxis |= (I2C2->RXDR << 8);
 	
   // Wait until TC (Transfer Complete) flag is set
-  while (!(I2C2->ISR & (I2C_ISR_TC | I2C_ISR_NACKF)))
+  while (!(I2C2->ISR & (I2C_ISR_TC)))
   {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle the error
-  }
-
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high to turn on the red LED
-    // Handle NACK error
+    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
   }
 
 	return yAxis;
