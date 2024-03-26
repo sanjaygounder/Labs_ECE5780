@@ -59,10 +59,6 @@ void _Error_Handler(char * file, int line);
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void write(char val);
-char read();
-int16_t readX();
-int16_t readY();
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -80,393 +76,140 @@ int main(void)
 
   __HAL_RCC_GPIOB_CLK_ENABLE(); // Enable the GPIOB clock in the RCC
   __HAL_RCC_GPIOC_CLK_ENABLE(); // Enable the GPIOC clock in the RCC
-  __HAL_RCC_I2C1_CLK_ENABLE(); // Enable the I2C2 clock
+  __HAL_RCC_ADC1_CLK_ENABLE(); // Enable the ADC1 clock in the RCC
   // Set up a configuration struct to pass to the initialization function (GPIOC w/out PC0) -- LEDs
   GPIO_InitTypeDef initStr = {GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9,
                               GPIO_MODE_OUTPUT_PP,
                               GPIO_SPEED_FREQ_LOW,
                               GPIO_NOPULL};
-  GPIO_InitTypeDef initStr_PC0 = {GPIO_PIN_0 | GPIO_PIN_13 | GPIO_PIN_14};
   HAL_GPIO_Init(GPIOC, &initStr); // Initialize pins PC6,7,8 & PC9 (LEDs)
-  HAL_GPIO_Init(GPIOC, &initStr_PC0); // Initialize pins PC0
   // Set up a configuration struct to pass to the initialization function (PB0)
   // HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Start PC8 high (orange)
-
-  // Set PB11 to alternate function mode, open-drain output type, and select I2C2_SDA as its alternate function.
-  GPIOB->MODER |= (1 << 23); // PB11 to AF mode (10)
-  GPIOB->OTYPER |= (1 << 11); // PB11 to open-drain output (1)
-  GPIOB ->AFR[1] |= (1 << 12); // Set it to AF1 (0001)
-  GPIOB->AFR[1] &= ~(1 <<13) | ~(1 <<14) | ~(1 << 15); // Set it to AF1 (0001)  
-
-  // Set PB13 to alternate function mode, open-drain output type, and select I2C2_SCL as its alternate function
-  GPIOB->MODER |= (1 << 27); // PB13 to AF mode (10)
-  GPIOB->OTYPER |= (1 << 13); // PB13 to open-drain output(1)
-  GPIOB->AFR[1] &= ~(1 << 21) | ~(1 << 23); // Set it to AF5 (0101)
-  GPIOB->AFR[1] |= (1 << 20) | (1 << 22); // Set it to AF5 (0101)
-
-  // Set PB14 to output mode, push-pull output type, and initialize/set the pin high.
-  GPIOB->MODER |= (1 << 28); // PB14 to ouput mode (01)    
-  GPIOB->OTYPER &= ~(1 << 14); // PB14 to push-pull output type (clear)   
-  GPIOB->ODR |= (1 << 14); // PB14 pin high                            
-
-  // Set PC0 to output mode, push-pull output type, and initialize/set the pin high.      
-  GPIOC->MODER |= (1 << 0); // PC0 set to output mode         
-  GPIOC->OTYPER &= ~(1 << 0); // PC0 to push-pull output type (clear)     
-  GPIOC->ODR |= (1<< 0); // PC0 pin high, I2C mode on (make sure this is working, maybe that is the issue?)
-
-  // Enable I2C2 clock
-  RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
-
-  // Configuring the Bus Timing (use 100 kHz) 
-  I2C2->TIMINGR = (0x1 << 28); 
-  I2C2->TIMINGR = (0x13 << 0);
-  I2C2->TIMINGR = (0xF << 8);
-  I2C2->TIMINGR = (0x2 << 16);
-  I2C2->TIMINGR = (0x4 << 20); 
-
-  // Enabling the Peripheral (PE)
-  I2C2->CR1 |= I2C_CR1_PE;
-
-  // ******** 5.4 Reading the Register ******** //
-
-  // // Set the transaction parameters in the CR2 register
-  // // Slave address (SDO), I2C2->RXDR = 0x69
-  // I2C2->CR2 |= (0x69 << 1);
-  // // Number of bytes to be transferred/received is 1, for part 2 it'll be (2 << 16)
-  // I2C2->CR2 |= (1 << 16); 
-
-  // // Set RD_WRN to WRN
-  // I2C2 -> CR2 &= ~I2C_CR2_RD_WRN; // 0 is a write
-
-  // // Set the START bit to begin the address frame
-  // I2C2->CR2 |= (1 << 13);
-  // // Wait until either of the TXIS (Transmit Register Empty/Ready) or NACKF (Slave NotAcknowledge) flags are set.
-  // while (!(I2C2->ISR & (I2C_ISR_TXIS | I2C_ISR_NACKF)))
-  // {
-  //   GPIOC->ODR |= (1 << 6); // Set PC6 high 
-  // }
-  // // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
-  // if (I2C2->ISR & I2C_ISR_NACKF)
-  // {
-  //   GPIOC->ODR |= (1 << 6); // Set PC6 high 
-  // }
   
-  // GPIOC->ODR &= ~(1 << 6); // Clear PC6 low
 
-  // // Write the address of the "WHO_AM_I" register into the I2C transmit register (TXDR)
-  // I2C2->TXDR |= 0x0F;
+  // ******** Initializing ADC ******** //
+  // 1) Set the desired operating mode, data resolution, and trigger source
+  // 2) Start the ADC calibration
+  // 3) Wait for the hardware to signal that the calibration has completed.
+  // 4) Set the peripheral enable.
+  // 5) Wait until the ADC ready flag is set
+  // 6) Start the ADC conversion. 
 
-  // // Wait until TC (Transfer Complete) flag is set
-  // while (!(I2C2->ISR & (I2C_ISR_TC))) 
-  // {
-  //   GPIOC->ODR |= (1 << 8); // Set PC8 high 
-  // }
-  // GPIOC->ODR &= ~(1 << 8); // Clear PC8 low
+  // ******** Initializing DAC ******** //
+  // 1) Set the trigger source for the channel/output update
+  // 2) Enable the channel used for output.
 
-  // // Reload CR2 register with the same parameters, but set the RD_WRN bit to indicate a read operation
-  // I2C2->CR2 = 0; // resetting CR2 register
-  // I2C2->CR2 |= (0x69 << 1);
-  // I2C2->CR2 |= (1 << 16);
-  // I2C2->CR2 |= (1 << 10); // 1 is a read
-  // I2C2->CR2 |= (1 << 13); // Set the START bit again to perform a I2C restart condition
+  // Analog functions of GPIO pins
+  // PC0 --> Additional Function: ADC_IN10
+  // PA4 --> Additional Function: DAC_OUT1
 
-  // // Wait until either RXNE or NACKF flags are set
-  // while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
-  // {
-  //   GPIOC->ODR |= (1 << 6); // Set PC6 high (testing purposes)
-  // }
-  // GPIOC->ODR &= ~(1 << 6); // Clear PC6 low
+  // Enable GPIOA/C in RCC peripheral
+  RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
+  RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
 
-  // // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
-  // if (I2C2->ISR & I2C_ISR_NACKF)
-  // {
-  //   GPIOC->ODR |= (1 << 6); // Set PC6 high (testing purposes)
-  // }
+  // ******** 6.1 Measuring a Potentiometer With the ADC ******** //
+  // Select a GPIO pin to use as the ADC input / no pull-up down resistors
+  GPIOC->MODER |= (1 << 0); // PC0 set to analog mode (11)      
+  GPIOC->MODER |= (1 << 1); // PC0 set to analog mode (11)
+  GPIOC-> PUPDR &= ~(1 < 0); // no pull-up down (00)
+  GPIOC-> PUPDR &= ~(1 < 1); // no pull-up down (00)
+  // Enable the ADC/DAC in the RCC peripheral
+  RCC->APB2ENR |= RCC_APB2ENR_ADCEN;
+  RCC->APB1ENR |= RCC_APB1ENR_DACEN;
 
-  // // Check the contents of the RXDR register to see if it matches the expected value (0xD4)
-  // if (I2C2->RXDR == 0xD3) 
-  // {
-  //   GPIOC->ODR |= (1 << 7); // Set PC7 (blue) high (testing purposes), shows the register value did match
-  //   I2C2->CR2 |= (1 << 14); // Set STOP bit
-  // }
+  // Configure the ADC to 8-bit resolution, continuous conversion mode, hardware triggers disabled (software trigger only).
+  ADC1->CFGR1 |= (1 << 4); // Set it to 8-bit resolution (10)
+  ADC1->CFGR1 |= (1 << 13); // Set it to continuous conversion mode (1)
+  // ADC1->CFGR1 &= ~(1 << 11); // Hardware trigger disabled (00)
+  // ADC1->CFGR1 &= ~(1 << 10); // Hardware trigger disabled (00)
+  // Select/enable the input pin’s channel for ADC conversion (ADC Channel Selection Register (ADC_CHSELR))
+  ADC1->CHSELR |= (1 << 10); //PC0 (ADC_IN10) selected for ADC conversion
 
-  // while(1){
+  // Set to wait conversion
+  ADC1->CFGR1 |= (1 << 14);
+  // Perform a self-calibration and enable
+  ADC1->CR &= ~(1); // Set ADEN to off
+  ADC1->CFGR1 &= ~(1); // Set DMAEN to off
 
-  // }
+  // Set ADCAL = 1
+  ADC1->CR |= (1 << 31);
 
-  // ******** 5.5 Initializing the Gyroscope ******** //
-  write(0x20);
+  // Wait until ADCAL = 0
+  while ((ADC1->CR & (1 <<31)) == (1 << 31)) {}
+  ADC1->CR |= 1; // Enable ADC
 
-  // Write ctrlReg1Value to the CTRL_REG1 register of the gyroscope, 0x20 is address
-  I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0)); 
-	I2C2->CR2 &= ~(1 << 10); 
-  I2C2->CR2 |= (0x69 << 1) | (2 << 16); 
+  ADC1->CR |= (1 << 2); // Start ADC
 
-  // Set the START bit to begin the address frame
-  I2C2->CR2 |= I2C_CR2_START;
+  // ******** 6.2 Generating Waveforms with the DAC. ******** //
+  // Set PA4 to analog (10)
+  GPIOA->MODER = (1 << 8);
+  GPIOA->MODER = (1 << 9);
+  GPIOC-> PUPDR &= ~(1 < 16); // no pull-up down (00)
+  GPIOC-> PUPDR &= ~(1 < 17); // no pull-up down (00)
+	
+  // Set the used DAC channel to software trigger mode.
+  DAC1->CR = 0; //Clear
+	DAC1->CR |= (7 << 3); //SW Trigger Mode
+	DAC1->SWTRIGR = 0;
+	DAC1->SWTRIGR |= (1 << 0); //SW Channel 1 Trigger
 
-  while (!(I2C2->ISR & (I2C_ISR_TXIS | I2C_ISR_NACKF))) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-  
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high
-  }
+  // Enable the used DAC channel.
+  DAC1->CR |= (1 << 0);
 
-  I2C2->TXDR = 0x20; 
+  // Sine Wave: 8-bit, 32 samples/cycle
+	const uint8_t sine_table[32] = {127,151,175,197,216,232,244,251,254,251,244,
+	232,216,197,175,151,127,102,78,56,37,21,9,2,0,2,9,21,37,56,78,102};
+	// Triangle Wave: 8-bit, 32 samples/cycle
+	const uint8_t triangle_table[32] = {0,15,31,47,63,79,95,111,127,142,158,174,
+	190,206,222,238,254,238,222,206,190,174,158,142,127,111,95,79,63,47,31,15};
+	// Sawtooth Wave: 8-bit, 32 samples/cycle
+	const uint8_t sawtooth_table[32] = {0,7,15,23,31,39,47,55,63,71,79,87,95,103,
+	111,119,127,134,142,150,158,166,174,182,190,198,206,214,222,230,238,246};
+	// Square Wave: 8-bit, 32 samples/cycle
+	const uint8_t square_table[32] = {254,254,254,254,254,254,254,254,254,254,
+	254,254,254,254,254,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-  while (!(I2C2->ISR & (I2C_ISR_TXIS | I2C_ISR_NACKF))) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
+  // In the main application loop, read the ADC data register and turn on/off LEDs depending on the value
+  int16_t threshold = 0;
+  while (1) {		
 
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-  
-  //bit pattern to turn on Xen, Yen, and PD/Noraml mode, 0x0B = 0000 1011
-  I2C2->TXDR = 0x0B;
+    // ******** 6.2 Generating Waveforms with the DAC. ******** //
+    for(int i = 0; i < 32; i++){
+				DAC1->DHR8R1 = sine_table[i]; //Change for triange/saw
+        if (i == 31){
+          i = 0;
+        }
+				HAL_Delay(1);
+    }
+    
+    // ******** 6.1 Measuring a Potentiometer With the ADC ******** //
+    // while((ADC1->ISR & ADC_ISR_EOS) == 0){} // wait for end of sequence
+		// // Reset
+		// ADC1->ISR |= ADC_ISR_EOS;
 
-  while (!(I2C2->ISR & (I2C_ISR_TC | I2C_ISR_NACKF)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
+    // if (ADC1->DR < 60){ 
+    //   GPIOC->ODR |= (1 << 6); // Red high only
+    //   GPIOC->ODR &= ~(1 << 7) |~(1 << 8)|~(1 << 9) ; // Turn off other LEDs
+		// }
+		// else if (ADC1->DR < 120){
+    //   GPIOC->ODR |= (1 << 6) | (1<<7); // Red, Blue high
+    //   GPIOC->ODR &= ~(1 << 8) |~(1 << 9); // Turn off green orange LED
+		// }
+		// else if (ADC1->DR < 180){
+    //   GPIOC->ODR |= (1 << 6) | (1<<7)| (1 << 8); // Red, Green, Blue high
+    //   GPIOC->ODR &= ~(1 << 9); // Turn off orange LED
+		// }
+		// else {
+		// 	GPIOC->ODR |= (1 << 6) | (1<<7)| (1 << 8) | (1 << 9); // All LEDs high
+		// }
+    // ADC1->CFGR1 ^= ADC_CFGR1_SCANDIR;
 
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-	write(0x20);
-	if (read() != 0x0b) {
-		GPIOC->BSRR |= (1 << 6); // Set PC6 high, means it was not set correctly
-	}
-
-  // ******** 5.6 Exercise Specifications ******** //  
-
-  // Clear all LEDs
-  GPIOC->BSRR |= (1 << (6 + 16)); // Clear PC6 to turn off the red LED
-  GPIOC->BSRR |= (1 << (7 + 16)); // Clear PC7 to turn off the blue LED
-  GPIOC->BSRR |= (1 << (8 + 16)); // Clear PC8 to turn off the orange LED
-  GPIOC->BSRR |= (1 << (9 + 16)); // Clear PC9 to turn off the green LED
-
-  int16_t xAxis = 0;
-	int16_t yAxis = 0;
-	const int16_t threshold = 0x01FF;
-
-  while (1) {
-		xAxis = readX();
-		yAxis = readY();
-		
-		if (xAxis > threshold) {
-			GPIOC->BSRR |= (1 << 6); // Set PC6
-		}
-		else {
-			GPIOC->BSRR |= (1 << (6 + 16)); // Clear PC6
-		}
-		
-		if (yAxis < 0 - threshold) {
-			GPIOC->BSRR |= (1 << 7); // Set PC7 
-		}
-		else {
-			GPIOC->BSRR |= (1 << (7 + 16)); // Clear PC7 
-		}
-		
-		if (xAxis < 0 - threshold) {
-			GPIOC->BSRR |= (1 << 8); // Set PC8
-		}
-		else {
-			GPIOC->BSRR |= (1 << (8 + 16)); // Clear PC8 
-		}
-		
-		if (yAxis > threshold) {
-			GPIOC->BSRR |= (1 << 9); // Set PC9
-		}
-		else {
-			GPIOC->BSRR |= (1 << (9 + 16)); // Clear PC9 
-		}
-		
 		HAL_Delay(100);
 	}
 
 }
 
-void write(char val) {
-  // Set the transaction parameters in the CR2 register
-	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
-	// Set mode to write
-	I2C2->CR2 &= ~(1 << 10);
-	I2C2->CR2 |= (0x69 << 1) | (1 << 16);
-	
-  // Set the START bit 
-  I2C2->CR2 |= I2C_CR2_START;
 
-  while (!(I2C2->ISR & (I2C_ISR_TXIS | I2C_ISR_NACKF))) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-  
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  // Set register of CTRL_REG1
-	I2C2->TXDR = val;
-	
-	while (!(I2C2->ISR & (I2C_ISR_TC | I2C_ISR_NACKF)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  if (I2C2->ISR & I2C_ISR_NACKF) 
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  return 0;
-}
-
-char read() {
-  // Reload CR2 register with the same parameters but set RD_WRN for read operation
-	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
-	I2C2->CR2 = (0x69 << 1) | (1 << 16) | I2C_CR2_RD_WRN;
-	
-  // Set the START bit 
-  I2C2->CR2 |= I2C_CR2_START;
-
-  // Wait until either RXNE or NACKF flags are set
-  while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
-  if (I2C2->ISR & I2C_ISR_NACKF)
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  char val = I2C2->RXDR;
-
-  // Wait until TC (Transfer Complete) flag is set
-  while (!(I2C2->ISR & (I2C_ISR_TC)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-	return val;
-}
-
-int16_t readX() {
-	
-  int16_t xAxis = 0;
-	write(0xA8);
-	I2C2->CR2 |= (1 << 14); // set STOP bit
-
-	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
-	I2C2->CR2 = (0x69 << 1) | (2 << 16) | I2C_CR2_RD_WRN;
-	
-  // Set the START bit 
-  I2C2->CR2 |= I2C_CR2_START;
-
-  // 1st 8-bit of data
-
-  // Wait until either RXNE or NACKF flags are set
-  while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
-  if (I2C2->ISR & I2C_ISR_NACKF)
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-	
-	xAxis = I2C2->RXDR;
-	
-	// 2nd 8-bit of data
-
-  // Wait until either RXNE or NACKF flags are set
-  while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
-  if (I2C2->ISR & I2C_ISR_NACKF)
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-	xAxis |= (I2C2->RXDR << 8);
-	
-  // Wait until TC (Transfer Complete) flag is set
-  while (!(I2C2->ISR & (I2C_ISR_TC)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-	return xAxis;
-}
-
-int16_t readY() {
-	
-  int16_t yAxis = 0;
-	write(0xAA);
-	I2C2->CR2 |= (1 << 14);
-
-	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
-	I2C2->CR2 = (0x69 << 1) | (2 << 16) | I2C_CR2_RD_WRN;
-
-	// Set the START bit 
-  I2C2->CR2 |= I2C_CR2_START;
-	
-	// 1st 8-bit of data
-	
-  // Wait until either RXNE or NACKF flags are set
-  while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
-  if (I2C2->ISR & I2C_ISR_NACKF)
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high
-  }
-	
-	yAxis = I2C2->RXDR;
-	
-	// 2nd 8-bit of data
-
-
-  // Wait until either RXNE or NACKF flags are set
-  while (!(I2C2->ISR & (I2C_ISR_RXNE | I2C_ISR_NACKF)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-  // Extra check to see if NACKF was the flag set --> meaning slave did not respond to the address frame
-  if (I2C2->ISR & I2C_ISR_NACKF)
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-	yAxis |= (I2C2->RXDR << 8);
-	
-  // Wait until TC (Transfer Complete) flag is set
-  while (!(I2C2->ISR & (I2C_ISR_TC)))
-  {
-    GPIOC->BSRR |= (1 << 6); // Set PC6 high 
-  }
-
-	return yAxis;
-}
 
 /** System Clock Configuration
 */
