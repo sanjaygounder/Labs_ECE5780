@@ -71,6 +71,7 @@ void encoder_init(void) {
     // Set up encoder input pins (TIMER 3 CH1 and CH2)
     RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
 
+    // PB4(ENCA) and PB5(ENCB) are encoder 
     GPIOB->MODER &= ~(GPIO_MODER_MODER4_0 | GPIO_MODER_MODER5_0);
     GPIOB->MODER |= (GPIO_MODER_MODER4_1 | GPIO_MODER_MODER5_1);
     GPIOB->AFR[0] |= ( (1 << 16) | (1 << 20) );
