@@ -190,8 +190,8 @@ void PI_update(void) {
         error_integral = 3200;
     }
     /// TODO: Calculate proportional portion, add integral and write to "output" variable
-    int16_t output = 0; // Change this!
-    output = Kp * error + error_integral;
+    int16_t output = (Kp * error) + error_integral; // Change this!
+    
     
     /* Because the calculated values for the PI controller are significantly larger than 
      * the allowable range for duty cycle, you'll need to divide the result down into 
