@@ -3,6 +3,8 @@
  * -------------------------------------------------------------------------------------------------------------
  */
 #include "motor.h"
+#include "stm32f0xx.h"
+#include "stm32f072xb.h"
 
 volatile int16_t error_integral = 0;    // Integrated error signal
 volatile uint8_t duty_cycle = 0;    	// Output PWM duty cycle
