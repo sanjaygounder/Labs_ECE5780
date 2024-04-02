@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "stm32f0xx.h"
 #include "motor.h"
+#include "stm32f072xb.h"
 
 /* -------------------------------------------------------------------------------------------------------------
  *  Global Variable Declarations
